@@ -1,8 +1,6 @@
 package com.example.studenthousing;
 import java.sql.*;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 public class CreateDataBase {
 
 }
@@ -72,7 +70,7 @@ class Property {
             // create a statement object
             Statement stmt = conn.createStatement();
 
-            // create the table if it does not exist
+            // create property table if it does not exist
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS property ("
                     + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,"
                     + "external_id VARCHAR(255),"
@@ -112,6 +110,37 @@ class Property {
                     + "shower VARCHAR(255),"
                     + "smoking_inside VARCHAR(255),"
                     + "toilet VARCHAR(255))"
+            );
+
+            // Create user table if not exists
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS user ("
+                    + "user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,"
+                    + "full_name VARCHAR(255),"
+                    + "username VARCHAR(255),"
+                    + "password VARCHAR(255),"
+                    + "registration_date VARCHAR(255),"
+                    + "photo_url VARCHAR(255),"
+                    + "email VARCHAR(255),"
+                    + "telephone VARCHAR(255),"
+                    + "age INT,"
+                    + "gender VARCHAR(255),"
+                    + "role VARCHAR(255),"
+                    + "status VARCHAR(255),"
+                    + "language VARCHAR(255),"
+                    + "max_rent VARCHAR(255),"
+                    + "pref_city VARCHAR(255),"
+                    + "pref_gender VARCHAR(255),"
+                    + "pref_kitchen VARCHAR(255),"
+                    + "pref_shower VARCHAR(255),"
+                    + "pref_toilet VARCHAR(255),"
+                    + "pref_living VARCHAR(255),"
+                    + "pref_internet VARCHAR(255),"
+                    + "pref_energy_label VARCHAR(255),"
+                    + "pref_pets VARCHAR(255),"
+                    + "pref_smoking_inside VARCHAR(255),"
+                    + "pref_roommates VARCHAR(255),"
+                    + "pref_distance_to_zipcode VARCHAR(255),"
+                    + "pref_zipcode VARCHAR(255))"
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);

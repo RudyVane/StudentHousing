@@ -1,4 +1,7 @@
 package com.example.studenthousing;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 
 public class CreateDataBase {
@@ -7,65 +10,26 @@ public class CreateDataBase {
 
 
 class Property {
-    private String externalId;
 
-    private int areaSqm;
-    private String city;
-    private String coverImageUrl;
-
-    private String furnish;
-
-    private String latitude;
-    private String longitude;
-    private String postalCode;
-
-    private String propertyType;
-    private String rawAvailability;
-    private int rent;
-    private String rentDetail;
-
-
-    private String title;
-
-    private int additionalCosts;
-
-    private int deposit;
-
-    private String descriptionNonTranslated;
-
-    private String descriptionTranslated;
-
-
-    private String energyLabel;
-    private String gender;
-    private String internet;
-    private String isRoomActive;
-    private String kitchen;
-    private String living;
-    private String matchAge;
-
-    private String matchCapacity;
-    private String matchGender;
-    private String matchLanguages;
-    private String matchStatus;
-    private String pageDescription;
-    private String pageTitle;
-    private String pets;
-    private int registrationCost;
-    private String roommates;
-    private String shower;
-    private String smokingInside;
-    private String toilet;
 
     // getters and setters
 
     public static void main(String[] args) throws ClassNotFoundException {
+        String psw = "";
         try {
+            try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\sqlww.txt"))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    psw = line;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             // load the MySQL driver
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // create a connection to the database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/student_housing", "root", "");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/student_housing", "root", psw);
 
             // create a statement object
             Statement stmt = conn.createStatement();

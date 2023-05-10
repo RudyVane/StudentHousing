@@ -1,13 +1,12 @@
 package com.example.studenthousing;
-import com.fasterxml.jackson.databind.JsonNode;
-import org.json.*;
-import org.json.JSONArray;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 import org.json.JSONException;
-import org.json.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -79,54 +78,67 @@ public class ReadJson {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Specify the path of the JSON file
-            String filePath = "C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\properties.json";
+            String filename = "C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\properties.json";
 
-            try {
-
-                // Read the JSON file into a JsonNode object
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode jsonNode = objectMapper.readTree(new File(filePath));
+            try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+                String line;
+                Gson gson = new Gson();
                 int count = 0;
-                for (JsonNode node : jsonNode) {
+                while ((line = br.readLine()) != null) {
                     count++;
-                    externalId = jsonNode.get("externalId").asText();
+                    JsonElement element = gson.fromJson(line, JsonElement.class);
+                    JsonObject node = element.getAsJsonObject();
+                try {
+                    externalId = node.get("externalId").getAsString();
                     userId = count;
-                    areaSqm = jsonNode.get("areaSqm").asInt();
-                    city = jsonNode.get("city").asText();
-                    coverImageUrl = jsonNode.get("coverImageUrl").asText();
-                    furnish = jsonNode.get("furnish").asText();
-                    latitude = jsonNode.get("latitude").asText();
-                    longitude = jsonNode.get("longitude").asText();
-                    postalCode = jsonNode.get("postalCode").asText();
-                    propertyType = jsonNode.get("propertyType").asText();
-                    rawAvailability = jsonNode.get("rawAvailability").asText();
-                    rent = jsonNode.get("rent").asInt();
-                    rentDetail = jsonNode.get("rentDetail").asText();
-                    title = jsonNode.get("title").asText();
-                    additionalCosts = jsonNode.get("additionalCosts").asInt();
-                    deposit = jsonNode.get("deposit").asInt();
-                    descriptionNonTranslated = jsonNode.get("descriptionNonTranslated").asText();
-                    descriptionTranslated = jsonNode.get("descriptionTranslated").asText();
-                    energyLabel = jsonNode.get("energyLabel").asText();
-                    gender = jsonNode.get("gender").asText();
-                    internet = jsonNode.get("internet").asText();
-                    isRoomActive = jsonNode.get("isRoomActive").asText();
-                    kitchen = jsonNode.get("kitchen").asText();
-                    living = jsonNode.get("living").asText();
-                    matchAge = jsonNode.get("matchAge").asText();
-                    matchCapacity = jsonNode.get("matchCapacity").asText();
-                    matchGender = jsonNode.get("matchGender").asText();
-                    matchLanguages = jsonNode.get("matchLanguages").asText();
-                    matchStatus = jsonNode.get("matchStatus").asText();
-                    pageDescription = jsonNode.get("pageDescription").asText();
-                    pageTitle = jsonNode.get("pageTitle").asText();
-                    pets = jsonNode.get("pets").asText();
-                    registrationCost = jsonNode.get("registrationCost").asInt();
-                    roommates = jsonNode.get("roommates").asText();
-                    shower = jsonNode.get("shower").asText();
-                    smokingInside = jsonNode.get("smokingInside").asText();
-                    toilet = jsonNode.get("toilet").asText();
+                    areaSqm = getIntValue(node, "areaSqm", 0);
+                    city = getStringValue(node, "city", "");
+                    coverImageUrl = getStringValue(node, "coverImageUrl", "");
+                    furnish = getStringValue(node, "furnish", "");
+                    latitude = getStringValue(node, "latitude", "");
+                    longitude = getStringValue(node, "longitude", "");
+                    postalCode = getStringValue(node, "postalCode", "");
+                    propertyType = getStringValue(node, "propertyType", "");
+                    rawAvailability = getStringValue(node, "rawAvailability", "");
+                    rent = getIntValue(node, "rent", 0);
+                    rentDetail = getStringValue(node, "rentDetail", "");
+                    title = getStringValue(node, "title", "");
+                    additionalCosts = getIntValue(node, "additionalCosts", 0);
+                    deposit = getIntValue(node, "deposit", 0);
+                    descriptionNonTranslated = getStringValue(node, "descriptionNonTranslated", "");
+                    descriptionTranslated = getStringValue(node, "descriptionTranslated", "");
+                    energyLabel = getStringValue(node, "energyLabel", "");
+                    gender = getStringValue(node, "gender", "");
+                    internet = getStringValue(node, "internet", "");
+                    isRoomActive = getStringValue(node, "isRoomActive", "");
+                    kitchen = getStringValue(node, "kitchen", "");
+                    living = getStringValue(node, "living", "");
+                    matchAge = getStringValue(node, "matchAge", "");
+                    matchCapacity = getStringValue(node, "matchCapacity", "");
+                    matchGender = getStringValue(node, "matchGender", "");
+                    matchLanguages = getStringValue(node, "matchLanguages", "");
+                    matchStatus = getStringValue(node, "matchStatus", "");
+                    pageDescription = getStringValue(node, "pageDescription", "");
+                    pageTitle = getStringValue(node, "pageTitle", "");
+                    pets = getStringValue(node, "pets", "");
+                    registrationCost = getIntValue(node, "registrationCost", 0);
+                    roommates = getStringValue(node, "roommates", "");
+                    shower = getStringValue(node, "shower", "");
+                    smokingInside = getStringValue(node, "smokingInside", "");
+                    toilet = getStringValue(node, "toilet", "");
 
+
+                }
+                catch (NumberFormatException e) {
+                    // Handle the exception
+                    System.err.println("Error: Invalid number format");
+
+                }
+                catch (NullPointerException e) {
+                    // handle the JsonNull exception here
+                    System.out.println("A JsonNull exception occurred: " + e.getMessage());
+
+                }
 
                     // create a connection to the database
                     String sql = "INSERT INTO property "
@@ -175,6 +187,7 @@ public class ReadJson {
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
                     }
+
                 }
 
             } catch (IOException e) {
@@ -186,6 +199,20 @@ public class ReadJson {
             throw new RuntimeException(e);
         }
     }
+    private static String getStringValue(JsonObject node, String name, String defaultValue) {
+        if (node.get(name) != null && !node.get(name).isJsonNull()) {
+            return node.get(name).getAsString();
+        }
+        return defaultValue;
+    }
+
+    private static int getIntValue(JsonObject node, String name, int defaultValue) {
+        if (node.get(name) != null && !node.get(name).isJsonNull()) {
+            return node.get(name).getAsInt();
+        }
+        return defaultValue;
+    }
+
 }
 
 

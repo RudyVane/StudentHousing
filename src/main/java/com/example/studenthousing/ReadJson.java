@@ -64,7 +64,7 @@ public class ReadJson {
     private static String toilet;
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException, JSONException, IOException {
-        String psw = "";
+        String psw = ""; //read password from external file
         try {
             try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\sqlww.txt"))) {
                 String line;
@@ -81,18 +81,19 @@ public class ReadJson {
             String filename = "C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\properties.json";
 
             try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-                String line;
+                String line; // read Json file and iterate over all lines
                 Gson gson = new Gson();
                 int count = 0;
                 while ((line = br.readLine()) != null) {
                     count++;
                     JsonElement element = gson.fromJson(line, JsonElement.class);
                     JsonObject node = element.getAsJsonObject();
-                try {
+                try { //get only needed keys
+                    userId = count; //this is not in the Json file, but we use it in the database, so we add them here
                     externalId = node.get("externalId").getAsString();
-                    userId = count;
-                    areaSqm = getIntValue(node, "areaSqm", 0);
-                    city = getStringValue(node, "city", "");
+                    // get integers and strings, check for exceptions using class getIntValue and class GetStrinGvalue
+                    areaSqm = getIntValue(node, "areaSqm", 0); //if exception is thrown, set to 0
+                    city = getStringValue(node, "city", "");  //if exception is thrown, set to ""
                     coverImageUrl = getStringValue(node, "coverImageUrl", "");
                     furnish = getStringValue(node, "furnish", "");
                     latitude = getStringValue(node, "latitude", "");
@@ -130,12 +131,12 @@ public class ReadJson {
 
                 }
                 catch (NumberFormatException e) {
-                    // Handle the exception
+                    // Handle the exception, if not handled by getIntValue()
                     System.err.println("Error: Invalid number format");
 
                 }
                 catch (NullPointerException e) {
-                    // handle the JsonNull exception here
+                    // handle the JsonNull exception here, if not handled by getIntValue() or getStringValue()
                     System.out.println("A JsonNull exception occurred: " + e.getMessage());
 
                 }
@@ -145,7 +146,7 @@ public class ReadJson {
                             + "(external_id, user_id, area_sqm, city, cover_image_url, furnish, latitude, longitude, postal_code, property_type, raw_availability, rent, rent_detail, title, additional_costs, deposit, description_non_translated, description_translated, energy_label, gender, internet, is_room_active, kitchen, living, match_age, match_capacity, match_gender, match_languages, match_status, page_description, page_title, pets, registration_cost, roommates, shower, smoking_inside, toilet) "
                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/student_housing", "root", psw);
-                         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                         PreparedStatement pstmt = conn.prepareStatement(sql)) { // set the values
                         pstmt.setString(1, externalId);
                         pstmt.setInt(2, userId);
                         pstmt.setInt(3, areaSqm);
@@ -183,7 +184,7 @@ public class ReadJson {
                         pstmt.setString(35, shower);
                         pstmt.setString(36, smokingInside);
                         pstmt.setString(37, toilet);
-                        pstmt.executeUpdate();
+                        pstmt.executeUpdate(); // fill the database
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
                     }
@@ -199,14 +200,14 @@ public class ReadJson {
             throw new RuntimeException(e);
         }
     }
-    private static String getStringValue(JsonObject node, String name, String defaultValue) {
+    private static String getStringValue(JsonObject node, String name, String defaultValue) { //handle JsonNull exceptions
         if (node.get(name) != null && !node.get(name).isJsonNull()) {
             return node.get(name).getAsString();
         }
         return defaultValue;
     }
 
-    private static int getIntValue(JsonObject node, String name, int defaultValue) {
+    private static int getIntValue(JsonObject node, String name, int defaultValue) { // handle NumberFormat Exceptions (NA)
         if (node.get(name) != null && !node.get(name).isJsonNull()) {
             return node.get(name).getAsInt();
         }

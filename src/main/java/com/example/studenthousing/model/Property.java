@@ -1,7 +1,6 @@
-package com.example.studenthousing;
+package com.example.studenthousing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -16,7 +15,7 @@ public class Property {
     private static String page_title;
     private static boolean is_room_active;
 
-    // data uit database halen?
+    // Data via PropertyRepository uit database halen
     public static String getExternal_id() {
         return external_id;
     }
@@ -87,6 +86,10 @@ public class Property {
 
     public void setIs_room_active(boolean is_room_active) {
         this.is_room_active = is_room_active;
+    }
+
+    public Property() {
+
     }
 
     public Property(String external_id, String city, int area_sqm, int rent, String cover_image_url,

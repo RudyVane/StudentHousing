@@ -1,7 +1,5 @@
-package com.example.studenthousing.user;
+package com.example.studenthousing.model;
 
-
-import org.apache.tomcat.util.buf.HexUtils;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

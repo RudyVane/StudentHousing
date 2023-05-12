@@ -61,8 +61,8 @@ public class UserRegistration {
 
             // Generate hashed password, return in hexadecimal form
             byte[] hash = SKFactory.generateSecret(spec).getEncoded();
-            System.out.println(iterations + "-" + HexUtils.toHexString(salt) + "-" + HexUtils.toHexString(hash));
-            return iterations + "-" + toHex(salt) + "-" + toHex(hash);
+            // System.out.println(iterations + ":" + HexUtils.toHexString(salt) + ":" + HexUtils.toHexString(hash));
+            return iterations + ":" + toHex(salt) + ":" + toHex(hash);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e1) {
             e1.getCause();
             e1.getMessage();

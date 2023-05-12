@@ -12,19 +12,19 @@ public class CreateDataBase {
     public static void main(String[] args) throws ClassNotFoundException {
         String psw = "";
         try {
-            try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\sqlww.txt"))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    psw = line;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\sqlww.txt"))) {
+//                String line;
+//                while ((line = br.readLine()) != null) {
+//                    psw = line;
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             // load the MySQL driver
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // create a connection to the database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/student_housing", "root", psw);
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/student_housing", "root", "");
 
             // create a statement object
             Statement stmt = conn.createStatement();
@@ -71,8 +71,8 @@ public class CreateDataBase {
                     + "toilet VARCHAR(255))"
             );
 
-            // Create user table if not exists
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS user ("
+            // Create user full profile table if not exists
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS user_profile ("
                     + "user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,"
                     + "full_name VARCHAR(255),"
                     + "username VARCHAR(255),"
@@ -100,6 +100,15 @@ public class CreateDataBase {
                     + "pref_roommates VARCHAR(255),"
                     + "pref_distance_to_zipcode VARCHAR(255),"
                     + "pref_zipcode VARCHAR(255))"
+            );
+
+            // Create user table if not exists
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS user ("
+                    + "user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,"
+                    + "username VARCHAR(255),"
+                    + "email VARCHAR(255),"
+                    + "password VARCHAR(255)" +
+                    ")"
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);

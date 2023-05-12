@@ -10,7 +10,7 @@ import java.util.List;
 import com.example.studenthousing.services.PropertyService;
 @RestController
 @RequestMapping("/property")
-public class RentalController {
+public class RentalControllerRudy {
     @Autowired
     private PropertyService propertyService;
 

@@ -1,6 +1,6 @@
 package com.example.studenthousing;
 
-import com.example.studenthousing.user.UserRegistration;
+import com.example.studenthousing.model.UserRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;

@@ -70,6 +70,11 @@ public class LoginController {
             throw new RuntimeException(e);
         }
 
+        // TO DO:
+        // Move database calls to UserRepository
+        // Use selected password to validate the inputted password against
+        // Respond accordingly
+
         return new ResponseEntity<>(Map.of(
                 "username", username,
                 "status", "Login validated! "),

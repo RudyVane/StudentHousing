@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Map;
 
 
@@ -20,7 +17,7 @@ public class RegisterController {
     @Autowired
     private Environment env;
 
-    public String getSQLPass() {
+    private String getSQLPass() {
         return env.getProperty("SQLPass");
     }
 
@@ -48,7 +45,7 @@ public class RegisterController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        // Check if all parameters are correctly loaded, else throw exception
+        // Check if all parameters are correctly loaded, else show error message
         if (username == null || email == null || password == null) {
             return new ResponseEntity<>(Map.of("error", "You have not given the correct input"),
                     HttpStatus.BAD_REQUEST);
@@ -67,15 +64,18 @@ public class RegisterController {
             // Create a connection to the database
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/student_housing", "root", getSQLPass());
 
-            // Create a statement object
-            Statement stmt = conn.createStatement();
-
             // Add user to database
-            String sql = String.format("INSERT INTO user "
+            String sql = "INSERT INTO user "
                     + "(username, email, password) "
-                    + "VALUES ('%s', '%s', '%s')",
-                    username, email, password);
-            stmt.executeUpdate(sql);
+                    + "VALUES (?, ?, ?)";
+
+            // Create a statement object
+            PreparedStatement stmt = conn.prepareStatement(sql); {
+                stmt.setString(1, username);
+                stmt.setString(2, email);
+                stmt.setString(3, password);
+                stmt.executeUpdate();
+            }
         } catch (
                 SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

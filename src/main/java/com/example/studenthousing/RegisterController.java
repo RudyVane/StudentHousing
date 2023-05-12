@@ -1,6 +1,8 @@
 package com.example.studenthousing;
 
 import com.example.studenthousing.user.UserRegistration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +15,11 @@ import java.util.Map;
 
 
 @RestController
-public class RentalController {
+public class RegisterController {
 
-    @GetMapping("/")
-    public String index() {
-        return "Hello, Student Housing";
-    }
+    // Get SQL-password
+//    @Autowired
+//    private Environment env;
 
     // Using POST to /register will add a user to the user-table
     @PostMapping("/register")

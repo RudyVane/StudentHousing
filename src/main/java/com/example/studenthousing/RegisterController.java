@@ -48,6 +48,12 @@ public class RegisterController {
                     HttpStatus.BAD_REQUEST);
         }
 
+        // Check if all parameters are correctly loaded, else throw exception
+        if (username == null || email == null || password == null) {
+            return new ResponseEntity<>(Map.of("error", "You have not given the correct input"),
+                    HttpStatus.BAD_REQUEST);
+        }
+
         // DEBUG print the new user
 //        System.out.println("Username: " + username);
 //        System.out.println("Email: " + email);

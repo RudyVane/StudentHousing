@@ -17,9 +17,12 @@ import java.util.Map;
 @RestController
 public class RegisterController {
 
-    // Get SQL-password
-//    @Autowired
-//    private Environment env;
+    @Autowired
+    private Environment env;
+
+    public String getSQLPass() {
+        return env.getProperty("SQLPass");
+    }
 
     // Using POST to /register will add a user to the user-table
     @PostMapping("/register")
@@ -56,7 +59,7 @@ public class RegisterController {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Create a connection to the database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/student_housing", "root", "");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/student_housing", "root", getSQLPass());
 
             // Create a statement object
             Statement stmt = conn.createStatement();

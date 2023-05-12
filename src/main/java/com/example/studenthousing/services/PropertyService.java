@@ -1,6 +1,6 @@
 package com.example.studenthousing.services;
 
-import com.example.studenthousing.PropertyController;
+// import com.example.studenthousing.PropertyController;
 import com.example.studenthousing.StudentHousingApplication;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,8 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import com.example.studenthousing.Property;
+import com.example.studenthousing.model.Property;
 import java.util.*;
 @Service
 public class PropertyService {
@@ -21,7 +20,7 @@ public class PropertyService {
 
     public ResponseEntity<String> getAllProperties() {
         try {
-            // list from all properties from deatabase??
+            // list from all properties from database??
             Map<String, Object> propertyInfo = new HashMap<>();
                 propertyInfo.put("external_id", Property.getExternal_id());
                 propertyInfo.put("area_sqm", Property.getArea_sqm());
@@ -51,5 +50,6 @@ public class PropertyService {
     }
 
     public Property getPropertyById(String id) {
+        return new Property();
     }
 }

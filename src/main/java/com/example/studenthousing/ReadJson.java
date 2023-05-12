@@ -78,7 +78,7 @@ public class ReadJson {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Specify the path of the JSON file
-            String filename = "C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\properties.json";
+            String filename = "properties.json";
 
             try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
                 String line; // read Json file and iterate over all lines

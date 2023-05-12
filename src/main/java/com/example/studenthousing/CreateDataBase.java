@@ -6,11 +6,6 @@ import java.sql.*;
 
 public class CreateDataBase {
 
-}
-
-
-class Property {
-
 
     // getters and setters
 

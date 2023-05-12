@@ -1,4 +1,5 @@
 package com.example.studenthousing;
+import com.example.studenthousing.model.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
@@ -10,7 +11,7 @@ import java.util.List;
 import com.example.studenthousing.services.PropertyService;
 @RestController
 @RequestMapping("/property")
-public class RentalControllerRudy {
+public class PropertyController {
     @Autowired
     private PropertyService propertyService;
 
@@ -30,22 +31,10 @@ public class RentalControllerRudy {
         }
     }
 
-    // Helper method to convert List<Property> to CSV format
-    private String convertToCsv(List<Property> propertyInfo) {
-        // Implementation of CSV conversion logic
-        // ...
-    }
-
     // Other methods for handling other HTTP methods and endpoints can be added here
 
-}
 
-@RestController
-@RequestMapping("/property/id")
-public class PropertyController {
 
-    @Autowired
-    private PropertyService propertyService;
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, "text/csv"})
     public ResponseEntity<?> getPropertyById(@PathVariable("id") String id, @RequestParam(defaultValue = "json") String format) {
@@ -72,6 +61,7 @@ public class PropertyController {
     private String convertToCsv(List<Property> properties) {
         // Implementation of CSV conversion logic
         // ...
+        return "this,will,be,a,csv,file";
     }
 
     // Other methods for handling other HTTP methods and endpoints can be added here

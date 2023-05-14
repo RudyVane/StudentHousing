@@ -1,7 +1,6 @@
 package com.example.studenthousing.services;
 
 import com.example.studenthousing.PropertyController;
-import com.example.studenthousing.StudentHousingApplication;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,9 @@ import java.util.*;
 @Service
 public class PropertyService {
 
-    @Autowired
-    private StudentHousingApplication properties;
-
     public ResponseEntity<String> getAllProperties() {
         try {
-            // list from all properties from deatabase??
+            // list from all properties from database??
             Map<String, Object> propertyInfo = new HashMap<>();
                 propertyInfo.put("external_id", Property.getExternal_id());
                 propertyInfo.put("area_sqm", Property.getArea_sqm());
@@ -32,7 +28,7 @@ public class PropertyService {
                 propertyInfo.put("gender", Property.getGender());
                 propertyInfo.put("is_room_active", Property.getIs_room_active());
                 propertyInfo.put("page_title", Property.getPage_title());
-                            
+
             String propertyInfoJson = objectToJson(propertyInfo);
             if (propertyInfoJson == null) {
                 propertyInfoJson = "[]";
@@ -51,5 +47,6 @@ public class PropertyService {
     }
 
     public Property getPropertyById(String id) {
+        return new Property();
     }
 }

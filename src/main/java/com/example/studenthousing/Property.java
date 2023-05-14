@@ -89,6 +89,9 @@ public class Property {
         this.is_room_active = is_room_active;
     }
 
+    public Property() {
+    }
+
     public Property(String external_id, String city, int area_sqm, int rent, String cover_image_url,
                     String property_type, String gender, String page_title, boolean is_room_active) {
             this.external_id = external_id;

@@ -66,7 +66,7 @@ public class ReadJson {
     public static void main(String[] args) throws ClassNotFoundException, SQLException, JSONException, IOException {
         String psw = ""; //read password from external file
         try {
-            try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Gebruiker\\IdeaProjects\\StudentHousing\\src\\main\\java\\com\\example\\studenthousing\\sqlww.txt"))) {
+            try (BufferedReader br = new BufferedReader(new FileReader("sqlww.txt"))) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     psw = line;

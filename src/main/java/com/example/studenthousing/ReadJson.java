@@ -65,6 +65,11 @@ public class ReadJson {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException, JSONException, IOException {
         String psw = ""; //read password from external file
+
+
+        // Use environment key as file ??
+
+
         try {
             try (BufferedReader br = new BufferedReader(new FileReader("sqlww.txt"))) {
                 String line;

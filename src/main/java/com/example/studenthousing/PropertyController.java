@@ -1,23 +1,19 @@
 package com.example.studenthousing;
-
-        import org.springframework.http.ResponseEntity;
-        import org.springframework.http.HttpHeaders;
-        import org.springframework.web.bind.annotation.RequestParam;
-        import org.springframework.http.MediaType;
-        import org.springframework.web.bind.annotation.*;
-        import java.util.Collections;
-        import java.util.List;
-        import com.example.studenthousing.services.PropertyService;
-
+import com.example.studenthousing.model.Property;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import java.util.Collections;
+import java.util.List;
+import com.example.studenthousing.services.PropertyService;
 @RestController
 @RequestMapping("/property")
 public class PropertyController {
-
-    private final PropertyService propertyService;
-
-    public PropertyController(PropertyService propertyService) {
-        this.propertyService = propertyService;
-    }
+    @Autowired
+    private PropertyService propertyService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, "text/csv"})
     public ResponseEntity<?> getAllProperties(@RequestParam(defaultValue = "json") String format) {
@@ -35,11 +31,10 @@ public class PropertyController {
         }
     }
 
-    // Helper method to convert List<Property> to CSV format
-    private String convertToCsv(List<Property> propertyInfo) {
-        // Implementation of CSV conversion logic
-        return "";
-    }
+    // Other methods for handling other HTTP methods and endpoints can be added here
+
+
+
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, "text/csv"})
     public ResponseEntity<?> getPropertyById(@PathVariable("id") String id, @RequestParam(defaultValue = "json") String format) {
@@ -63,9 +58,12 @@ public class PropertyController {
     }
 
     // Helper method to convert List<Property> to CSV format
-    private String convertIdToCsv(List<Property> properties) {
-        return "";
+    private String convertToCsv(List<Property> properties) {
+        // Implementation of CSV conversion logic
+        // ...
+        return "this,will,be,a,csv,file";
     }
 
     // Other methods for handling other HTTP methods and endpoints can be added here
+
 }

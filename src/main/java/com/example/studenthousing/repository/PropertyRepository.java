@@ -9,5 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface PropertyRepository extends CrudRepository<Property, Integer> {
     Optional<Property> findById(Integer Id);
 
-    List<Property> findByPropertyName(String s);
+//    List<Property> findByPropertyName(String s);
 }

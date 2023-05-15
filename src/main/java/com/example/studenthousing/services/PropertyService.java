@@ -25,9 +25,9 @@ public class PropertyService {
         result.ifPresent(property -> System.out.println());
 
         // Find a Property by PropertyName
-        System.out.println("\nFind Property by name (JPA-Property1)...");
-        List<Property> properties = propertyRepository.findByPropertyName("JPA-Property1");
-        properties.forEach(property -> System.out.println(property));
+//        System.out.println("\nFind Property by name (JPA-Property1)...");
+//        List<Property> properties = propertyRepository.findByPropertyName("JPA-Property1");
+//        properties.forEach(property -> System.out.println(property));
 
         // List all Properties
         System.out.println("\nListing all Properties...");

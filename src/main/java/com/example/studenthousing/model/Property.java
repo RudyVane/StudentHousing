@@ -1,30 +1,122 @@
 package com.example.studenthousing.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
 
-import java.util.Objects;
-
+@Entity
 public class Property {
-    private static String external_id;
-    private static String city;
-    private static int rent;
-    private static int area_sqm;
-    private static String cover_image_url;
-    private static String property_type;
-    private static String gender;
-    private static String page_title;
-    private static boolean is_room_active;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column(name="external_id")
+    private String externalId;
+    @Column(name="user_id")
+    private int userId;
+    @Column(name="area_sqm")
+    private int areaSqm;
+    @Column(name="city")
+    private String city;
+    @Column(name="cover_image_url")
+    private String coverImageUrl;
+    @Column(name="furnish")
 
-    // Data via PropertyRepository uit database halen
-    public static String getExternal_id() {
-        return external_id;
+    private String furnish;
+    @Column(name="latitude")
+    private String latitude;
+    @Column(name="longitude")
+    private String longitude;
+    @Column(name="postal_code")
+    private String postalCode;
+    @Column(name="property_type")
+    private String propertyType;
+    @Column(name="raw_availability")
+    private String rawAvailability;
+    @Column(name="rent")
+    private int rent;
+    @Column(name="rent_detail")
+    private String rentDetail;
+    @Column(name="title")
+    private String title;
+    @Column(name="additional_costs")
+    private int additionalCosts;
+    @Column(name="deposit")
+    private int deposit;
+    @Column(name="description_non_translated")
+    private String descriptionNonTranslated;
+    @Column(name="description_translated")
+
+    private String descriptionTranslated;
+    @Column(name="energy_label")
+    private String energyLabel;
+    @Column(name="gender")
+    private String gender;
+    @Column(name="internet")
+    private String internet;
+    @Column(name="is_room_active")
+    private String isRoomActive;
+    @Column(name="kitchen")
+    private String kitchen;
+    @Column(name="living")
+    private String living;
+    @Column(name="match_age")
+    private String matchAge;
+    @Column(name="match_capacity")
+    private String matchCapacity;
+    @Column(name="match_gender")
+    private String matchGender;
+    @Column(name="match_languages")
+    private String matchLanguages;
+    @Column(name="match_status")
+    private String matchStatus;
+    @Column(name="page_description")
+    private String pageDescription;
+    @Column(name="page_title")
+    private String pageTitle;
+    @Column(name="pets")
+    private String pets;
+    @Column(name="registration_costs")
+    private int registrationCost;
+    @Column(name="roommates")
+    private String roommates;
+    @Column(name="shower")
+    private String shower;
+    @Column(name="smoking_inside")
+    private String smokingInside;
+    @Column(name="toilet")
+    private String toilet;
+    public Property() {
+    }
+    public int getId() {
+        return id;
     }
 
-    public void setExternal_id(String external_id) {
-        this.external_id = external_id;
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getExternalId() {
+        return externalId;
     }
 
-    public static String getCity() {
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getAreaSqm() {
+        return areaSqm;
+    }
+
+    public void setAreaSqm(int areaSqm) {
+        this.areaSqm = areaSqm;
+    }
+
+    public String getCity() {
         return city;
     }
 
@@ -32,7 +124,63 @@ public class Property {
         this.city = city;
     }
 
-    public static int getRent() {
+    public String getCoverImageUrl() {
+        return coverImageUrl;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
+    }
+
+    public String getFurnish() {
+        return furnish;
+    }
+
+    public void setFurnish(String furnish) {
+        this.furnish = furnish;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
+    }
+
+    public String getRawAvailability() {
+        return rawAvailability;
+    }
+
+    public void setRawAvailability(String rawAvailability) {
+        this.rawAvailability = rawAvailability;
+    }
+
+    public int getRent() {
         return rent;
     }
 
@@ -40,31 +188,63 @@ public class Property {
         this.rent = rent;
     }
 
-    public static int getArea_sqm() {
-        return area_sqm;
+    public String getRentDetail() {
+        return rentDetail;
     }
 
-    public void setArea_sqm(int area_sqm) {
-        this.area_sqm = area_sqm;
+    public void setRentDetail(String rentDetail) {
+        this.rentDetail = rentDetail;
     }
 
-    public static String getCover_image_url() {
-        return cover_image_url;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCover_image_url(String cover_image_url) {
-        this.cover_image_url = cover_image_url;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public static String getProperty_type() {
-        return property_type;
+    public int getAdditionalCosts() {
+        return additionalCosts;
     }
 
-    public void setProperty_type(String property_type) {
-        this.property_type = property_type;
+    public void setAdditionalCosts(int additionalCosts) {
+        this.additionalCosts = additionalCosts;
     }
 
-    public static String getGender() {
+    public int getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(int deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getDescriptionNonTranslated() {
+        return descriptionNonTranslated;
+    }
+
+    public void setDescriptionNonTranslated(String descriptionNonTranslated) {
+        this.descriptionNonTranslated = descriptionNonTranslated;
+    }
+
+    public String getDescriptionTranslated() {
+        return descriptionTranslated;
+    }
+
+    public void setDescriptionTranslated(String descriptionTranslated) {
+        this.descriptionTranslated = descriptionTranslated;
+    }
+
+    public String getEnergyLabel() {
+        return energyLabel;
+    }
+
+    public void setEnergyLabel(String energyLabel) {
+        this.energyLabel = energyLabel;
+    }
+
+    public String getGender() {
         return gender;
     }
 
@@ -72,63 +252,146 @@ public class Property {
         this.gender = gender;
     }
 
-    public static String getPage_title() {
-        return page_title;
+    public String getInternet() {
+        return internet;
     }
 
-    public void setPage_title(String page_title) {
-        this.page_title = page_title;
+    public void setInternet(String internet) {
+        this.internet = internet;
     }
 
-    public static boolean getIs_room_active() {
-        return is_room_active;
+    public String getIsRoomActive() {
+        return isRoomActive;
     }
 
-    public void setIs_room_active(boolean is_room_active) {
-        this.is_room_active = is_room_active;
+    public void setIsRoomActive(String isRoomActive) {
+        this.isRoomActive = isRoomActive;
     }
 
-    public Property() {
-
+    public String getKitchen() {
+        return kitchen;
     }
 
-    public Property(String external_id, String city, int area_sqm, int rent, String cover_image_url,
-                    String property_type, String gender, String page_title, boolean is_room_active) {
-            this.external_id = external_id;
-            this.area_sqm = area_sqm;
-            this.city = city;
-            this.rent = rent;
-            this.cover_image_url = cover_image_url;
-            this.property_type = property_type;
-            this.gender = gender;
-            this.page_title = page_title;
-            this.is_room_active = is_room_active;
+    public void setKitchen(String kitchen) {
+        this.kitchen = kitchen;
+    }
 
-            setAvailable(is_room_active);
-        }
+    public String getLiving() {
+        return living;
+    }
 
+    public void setLiving(String living) {
+        this.living = living;
+    }
+
+    public String getMatchAge() {
+        return matchAge;
+    }
+
+    public void setMatchAge(String matchAge) {
+        this.matchAge = matchAge;
+    }
+
+    public String getMatchCapacity() {
+        return matchCapacity;
+    }
+
+    public void setMatchCapacity(String matchCapacity) {
+        this.matchCapacity = matchCapacity;
+    }
+
+    public String getMatchGender() {
+        return matchGender;
+    }
+
+    public void setMatchGender(String matchGender) {
+        this.matchGender = matchGender;
+    }
+
+    public String getMatchLanguages() {
+        return matchLanguages;
+    }
+
+    public void setMatchLanguages(String matchLanguages) {
+        this.matchLanguages = matchLanguages;
+    }
+
+    public String getMatchStatus() {
+        return matchStatus;
+    }
+
+    public void setMatchStatus(String matchStatus) {
+        this.matchStatus = matchStatus;
+    }
+
+    public String getPageDescription() {
+        return pageDescription;
+    }
+
+    public void setPageDescription(String pageDescription) {
+        this.pageDescription = pageDescription;
+    }
+
+    public String getPageTitle() {
+        return pageTitle;
+    }
+
+    public void setPageTitle(String pageTitle) {
+        this.pageTitle = pageTitle;
+    }
+
+    public String getPets() {
+        return pets;
+    }
+
+    public void setPets(String pets) {
+        this.pets = pets;
+    }
+
+    public int getRegistrationCost() {
+        return registrationCost;
+    }
+
+    public void setRegistrationCost(int registrationCost) {
+        this.registrationCost = registrationCost;
+    }
+
+    public String getRoommates() {
+        return roommates;
+    }
+
+    public void setRoommates(String roommates) {
+        this.roommates = roommates;
+    }
+
+    public String getShower() {
+        return shower;
+    }
+
+    public void setShower(String shower) {
+        this.shower = shower;
+    }
+
+    public String getSmokingInside() {
+        return smokingInside;
+    }
+
+    public void setSmokingInside(String smokingInside) {
+        this.smokingInside = smokingInside;
+    }
+
+    public String getToilet() {
+        return toilet;
+    }
+
+    public void setToilet(String toilet) {
+        this.toilet = toilet;
+    }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Property property = (Property) o;
-        return rent == property.rent && area_sqm == property.area_sqm && is_room_active == property.is_room_active && Objects.equals(external_id, property.external_id) && Objects.equals(city, property.city) && Objects.equals(cover_image_url, property.cover_image_url) && Objects.equals(property_type, property.property_type) && Objects.equals(gender, property.gender) && Objects.equals(page_title, property.page_title);
+    public String toString() {
+        return "Property [id=" + id + ", external_id=" + externalId + "]";
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(external_id, city, rent, area_sqm, cover_image_url, property_type, gender, page_title, is_room_active);
-    }
-
-    @JsonIgnore
-        public boolean Is_room_active() {
-            return is_room_active;
-        }
-
-        public void setAvailable(boolean setAvailable) {
-            is_room_active = setAvailable;
-        }
 
 
 }

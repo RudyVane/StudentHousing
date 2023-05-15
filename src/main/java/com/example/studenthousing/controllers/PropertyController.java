@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/com/example/studenthousing/controller/PropertyController.java
 package com.example.studenthousing.controller;
+========
+package com.example.studenthousing.controllers;
+>>>>>>>> a097b35 (omgezet naar jpa):src/main/java/com/example/studenthousing/controllers/PropertyController.java
 import com.example.studenthousing.model.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +41,8 @@ public class PropertyController {
 
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, "text/csv"})
-    public ResponseEntity<?> getPropertyById(@PathVariable("id") String id, @RequestParam(defaultValue = "json") String format) {
-        Property property = propertyService.getPropertyById(id);
+    public ResponseEntity<?> getPropertyById(@PathVariable("id") int id, @RequestParam(defaultValue = "json") String format) {
+        Property property = (Property) propertyService.getPropertyById(id);
 
         if (property == null) {
             // If property is not found, return a 404 Not Found response

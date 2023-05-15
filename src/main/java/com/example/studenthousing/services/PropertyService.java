@@ -1,55 +1,50 @@
 package com.example.studenthousing.services;
 
-// import com.example.studenthousing.controller.PropertyController;
-import com.example.studenthousing.StudentHousingApplication;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+
 import com.example.studenthousing.model.Property;
-import java.util.*;
+import com.example.studenthousing.repository.PropertyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 @Service
 public class PropertyService {
-
     @Autowired
-    private StudentHousingApplication properties;
+    private PropertyRepository propertyRepository;
 
-    public ResponseEntity<String> getAllProperties() {
-        try {
-            // list from all properties from database??
-            Map<String, Object> propertyInfo = new HashMap<>();
-                propertyInfo.put("external_id", Property.getExternal_id());
-                propertyInfo.put("area_sqm", Property.getArea_sqm());
-                propertyInfo.put("city", Property.getCity());
-                propertyInfo.put("cover_image_url", Property.getCover_image_url());
-                propertyInfo.put("property_type", Property.getProperty_type());
-                propertyInfo.put("rent", Property.getRent());
-                propertyInfo.put("gender", Property.getGender());
-                propertyInfo.put("is_room_active", Property.getIs_room_active());
-                propertyInfo.put("page_title", Property.getPage_title());
-                            
-            String propertyInfoJson = objectToJson(propertyInfo);
-            if (propertyInfoJson == null) {
-                propertyInfoJson = "[]";
-            }
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            return new ResponseEntity<>(propertyInfoJson, headers, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error retrieving available properties", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public void test() {
+        // Save a new Property
+        Property newProperty = new Property();
+        newProperty.setExternalId("JPA-Property1");
+
+        propertyRepository.save(newProperty);
+
+        // Find a Property by ID
+        Optional<Property> result = propertyRepository.findById(1);
+        result.ifPresent(property -> System.out.println());
+
+        // Find a Property by PropertyName
+        System.out.println("\nFind Property by name (JPA-Property1)...");
+        List<Property> properties = propertyRepository.findByPropertyName("JPA-Property1");
+        properties.forEach(property -> System.out.println(property));
+
+        // List all Properties
+        System.out.println("\nListing all Properties...");
+        Iterable<Property> iterator = propertyRepository.findAll();
+        iterator.forEach(property -> System.out.println(property));
+
+        // Count number of Properties
+        long count = propertyRepository.count();
+        System.out.println("Number of Properties: " + count);
     }
 
-    private String objectToJson(Object object) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(object);
+    public Object getPropertyById(int id) {
+        return propertyRepository.findById(id);
     }
 
-    public Property getPropertyById(String id) {
-        return new Property();
+    public Object getAllProperties() {
+        return propertyRepository.findAll();
     }
 }
+

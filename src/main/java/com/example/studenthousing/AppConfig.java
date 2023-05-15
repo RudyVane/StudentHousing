@@ -15,7 +15,7 @@ public class AppConfig {
     @Bean
     public LocalEntityManagerFactoryBean entityManagerFactory() {
         LocalEntityManagerFactoryBean factoryBean = new LocalEntityManagerFactoryBean();
-        factoryBean.setPersistenceUnitName("TestDB");
+        factoryBean.setPersistenceUnitName("StudentHousing");
 
         return factoryBean;
     }

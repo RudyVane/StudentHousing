@@ -1,4 +1,4 @@
-package com.example.studenthousing;
+package com.example.studenthousing.controller;
 import com.example.studenthousing.model.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

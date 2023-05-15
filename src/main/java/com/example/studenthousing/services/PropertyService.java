@@ -1,6 +1,6 @@
 package com.example.studenthousing.services;
 
-// import com.example.studenthousing.PropertyController;
+// import com.example.studenthousing.controller.PropertyController;
 import com.example.studenthousing.StudentHousingApplication;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

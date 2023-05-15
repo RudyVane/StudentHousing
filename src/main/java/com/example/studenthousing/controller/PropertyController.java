@@ -1,8 +1,5 @@
-<<<<<<<< HEAD:src/main/java/com/example/studenthousing/controller/PropertyController.java
 package com.example.studenthousing.controller;
-========
-package com.example.studenthousing.controllers;
->>>>>>>> a097b35 (omgezet naar jpa):src/main/java/com/example/studenthousing/controllers/PropertyController.java
+
 import com.example.studenthousing.model.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

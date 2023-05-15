@@ -6,12 +6,23 @@ import java.util.Optional;
 import com.example.studenthousing.model.User;
 import com.example.studenthousing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service("userService")
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
+
+    public User registerNewUser(String username, String email, String password) {
+        User u = new User();
+        u.setUsername(username);
+        u.setEmail(email);
+        u.setPassword(encoder.encode(password));
+        return userRepository.save(u);
+    }
 
     public void test() {
         // Save a new user

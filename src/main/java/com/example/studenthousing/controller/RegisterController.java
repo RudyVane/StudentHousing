@@ -2,6 +2,7 @@ package com.example.studenthousing.controller;
 
 import com.example.studenthousing.model.User;
 import com.example.studenthousing.repository.UserRepository;
+import com.example.studenthousing.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,13 @@ public class RegisterController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/register")
+    public String registerGET() {
+        return "It works!";
+    }
 
     // Using POST to /register will add a user to the user-table
     @PostMapping("/register")
@@ -41,16 +49,17 @@ public class RegisterController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        // Create new user, save to db
-        User u = new User();
-        u.setUsername(user.getUsername());
-        u.setPassword(user.getPassword());
-        u.setEmail(user.getEmail());
-        userRepository.save(u);
+        // Create new user via UserService
+        User newUser = userService.registerNewUser(
+                user.getUsername(),
+                user.getEmail(),
+                user.getPassword());
 
         return new ResponseEntity<>(Map.of(
-                "username", user.getUsername(),
-                "email", user.getEmail(),
+                "username", newUser.getUsername(),
+                "email", newUser.getEmail(),
+                "id", newUser.getUser_id(),
+                "password", newUser.getPassword(),
                 "status", "Account created!"),
                 HttpStatus.OK);
     }

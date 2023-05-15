@@ -133,13 +133,8 @@ public class User {
         return password;
     }
 
-    @Autowired
-    private PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     public void setPassword(String password) {
-        this.password = encoder().encode(password);
+        this.password = password;
     }
 
     public LocalDateTime getRegistrationDate() {

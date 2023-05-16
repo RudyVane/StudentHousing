@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.example.studenthousing.model.User;
 import com.example.studenthousing.repository.UserRepository;
+import com.example.studenthousing.validation.error.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,15 @@ public class UserService {
     private PasswordEncoder encoder;
 
     public User registerNewUser(String username, String email, String password) {
+
+        List<User> userExists = userRepository.findByUsername(username);
+        List<User> emailExists = userRepository.findByEmail(email);
+        if (!userExists.isEmpty()) {
+            throw new UserAlreadyExistException("Username already exists!");
+        } else if (!emailExists.isEmpty()) {
+            throw new UserAlreadyExistException("Email address is already used!");
+        }
+
         User u = new User();
         u.setUsername(username);
         u.setEmail(email);
@@ -52,10 +62,12 @@ public class UserService {
         });
 
         // Find a user by email address
-        User userByMail = userRepository.findByEmail(randomEmail);
-        System.out.printf("\nFind user by email (%s)...\n", randomEmail);
-        System.out.println(userByMail.getUsername());
-        System.out.println(userByMail.getEmail());
+        List<User> usersByMail = userRepository.findByEmail(randomEmail);
+        usersByMail.forEach(user -> {
+            System.out.printf("\nFind user by email (%s)...\n", randomEmail);
+            System.out.println(user.getUsername());
+            System.out.println(user.getEmail());
+        });
 
         // List all users
         Iterable<User> iterator = userRepository.findAll();

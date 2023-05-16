@@ -32,7 +32,7 @@ public class PropertyService {
         // List all Properties
         System.out.println("\nListing all Properties...");
         Iterable<Property> iterator = propertyRepository.findAll();
-        iterator.forEach(property -> System.out.println(property));
+        //iterator.forEach(property -> System.out.println(property));
 
         // Count number of Properties
         long count = propertyRepository.count();

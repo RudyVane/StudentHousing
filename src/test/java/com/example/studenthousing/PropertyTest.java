@@ -9,7 +9,7 @@ public class PropertyTest {
         appContext.scan("com.example.studenthousing");
         appContext.refresh();
 
-        PropertyService PropertyService = (PropertyService) appContext.getBean("PropertyService");
+        PropertyService PropertyService = (PropertyService) appContext.getBean("propertyService");
         PropertyService.test();
 
         appContext.close();

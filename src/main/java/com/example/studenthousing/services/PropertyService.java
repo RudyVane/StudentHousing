@@ -18,7 +18,7 @@ public class PropertyService {
         Property newProperty = new Property();
         newProperty.setExternalId("JPA-Property1");
 
-        propertyRepository.save(newProperty);
+        //propertyRepository.save(newProperty);
 
         // Find a Property by ID
         Optional<Property> result = propertyRepository.findById(1);

@@ -34,17 +34,17 @@ public class UserService {
 
         // Find a user by ID
         Optional<User> result = userRepository.findById(1);
-        result.ifPresent(user -> System.out.println(user));
+        result.ifPresent(user -> System.out.println(user.getUsername()));
 
         // Find a user by username
         System.out.println("\nFind user by name (JPA-user1)...");
         List<User> users = userRepository.findByUsername("JPA-user1");
-        users.forEach(user -> System.out.println(user));
+        users.forEach(user -> System.out.println(user.getUsername()));
 
         // List all users
         System.out.println("\nListing all users...");
         Iterable<User> iterator = userRepository.findAll();
-        iterator.forEach(user -> System.out.println(user));
+        iterator.forEach(user -> System.out.println(user.getUsername()));
 
         // Count number of users
         long count = userRepository.count();

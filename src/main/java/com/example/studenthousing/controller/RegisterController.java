@@ -15,14 +15,6 @@ import java.util.Map;
 
 @RestController
 public class RegisterController {
-
-    @Autowired
-    private Environment env;
-
-    private String getSQLPass() {
-        return env.getProperty("SQLPass");
-    }
-
     @Autowired
     private UserRepository userRepository;
     @Autowired

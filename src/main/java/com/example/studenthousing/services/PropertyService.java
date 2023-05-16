@@ -2,7 +2,6 @@ package com.example.studenthousing.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.example.studenthousing.model.Property;
 import com.example.studenthousing.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,20 @@ public class PropertyService {
     @Autowired
     private PropertyRepository propertyRepository;
 
+        public Property newProperty(String externalId, int areaSqm, String city) {
+        Property p = new Property();
+        p.setExternalId(externalId);
+        p.setAreaSqm(areaSqm);
+        p.setCity(city);
+        return propertyRepository.save(p);
+    }
+
     public void test() {
         // Save a new Property
         Property newProperty = new Property();
-        newProperty.setExternalId("JPA-Property1");
+        newProperty.setExternalId("Room-123");
 
-        //propertyRepository.save(newProperty);
+        propertyRepository.save(newProperty);
 
         // Find a Property by ID
         Optional<Property> result = propertyRepository.findById(1);
@@ -30,7 +37,7 @@ public class PropertyService {
 //        properties.forEach(property -> System.out.println(property));
 
         // List all Properties
-        System.out.println("\nListing all Properties...");
+       // System.out.println("\nListing all Properties...");
         Iterable<Property> iterator = propertyRepository.findAll();
         //iterator.forEach(property -> System.out.println(property));
 

@@ -45,7 +45,7 @@ public class UserService {
 
         String randomEmail = randomUsername + "@test.com";
         newUser.setEmail(randomEmail);
-        newUser.setPassword("eenPassWord");
+        newUser.setPassword(encoder.encode("eenPassWord"));
 
         userRepository.save(newUser);
 

@@ -3,6 +3,7 @@ package com.example.studenthousing.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name="property")
 public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

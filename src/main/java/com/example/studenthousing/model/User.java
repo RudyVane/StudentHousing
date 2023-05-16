@@ -1,5 +1,6 @@
 package com.example.studenthousing.model;
 
+import com.example.studenthousing.validation.ValidEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ public class User {
     @Column(name="photo_url")
     private String photoURL;
     @Column(name="email")
+    @ValidEmail
     private String email;
     @Column(name="telephone")
     private String telephone;

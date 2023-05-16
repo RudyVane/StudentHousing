@@ -2,6 +2,7 @@ package com.example.studenthousing.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import com.example.studenthousing.model.User;
 import com.example.studenthousing.repository.UserRepository;
@@ -27,7 +28,10 @@ public class UserService {
     public void test() {
         // Save a new user
         User newUser = new User();
-        newUser.setUsername("JPA-user1");
+        // Create random username
+        Random random = new Random();
+        String randomUsername = "User" + random.nextInt() + random.nextInt();
+        newUser.setUsername(randomUsername);
         newUser.setPassword("eenPassWord");
 
         userRepository.save(newUser);

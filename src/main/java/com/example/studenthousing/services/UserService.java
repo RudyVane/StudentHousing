@@ -17,7 +17,7 @@ public class UserService {
         // Save a new user
         User newUser = new User();
         newUser.setUsername("JPA-user1");
-        newUser.setPassword("eenPassWord");
+//        newUser.setPassword("eenPassWord");
 
         userRepository.save(newUser);
 

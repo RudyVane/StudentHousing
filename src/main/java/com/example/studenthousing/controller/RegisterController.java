@@ -44,7 +44,7 @@ public class RegisterController {
         // Create new user, save to db
         User u = new User();
         u.setUsername(user.getUsername());
-        u.setPassword(user.getPassword());
+//        u.setPassword(user.getPassword());
         u.setEmail(user.getEmail());
         userRepository.save(u);
 

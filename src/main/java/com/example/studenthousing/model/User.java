@@ -1,9 +1,5 @@
 package com.example.studenthousing.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -133,14 +129,14 @@ public class User {
         return password;
     }
 
-    @Autowired
-    private PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    public void setPassword(String password) {
-        this.password = encoder().encode(password);
-    }
+//    @Autowired
+//    private PasswordEncoder encoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = encoder().encode(password);
+//    }
 
     public LocalDateTime getRegistrationDate() {
         return registrationDate;

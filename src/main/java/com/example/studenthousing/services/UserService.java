@@ -32,6 +32,9 @@ public class UserService {
         Random random = new Random();
         String randomUsername = "User" + random.nextInt() + random.nextInt();
         newUser.setUsername(randomUsername);
+
+        String randomEmail = randomUsername + "@test.com";
+        newUser.setEmail(randomEmail);
         newUser.setPassword("eenPassWord");
 
         userRepository.save(newUser);
@@ -41,13 +44,22 @@ public class UserService {
         result.ifPresent(user -> System.out.println(user.getUsername()));
 
         // Find a user by username
-        System.out.println("\nFind user by name (JPA-user1)...");
-        List<User> users = userRepository.findByUsername("JPA-user1");
-        users.forEach(user -> System.out.println(user.getUsername()));
+        List<User> users = userRepository.findByUsername(randomUsername);
+        users.forEach(user -> {
+            System.out.printf("\nFind user by name (%s)...\n", randomUsername);
+            System.out.println(user.getUsername());
+            System.out.println(user.getEmail());
+        });
+
+        // Find a user by email address
+        User userByMail = userRepository.findByEmail(randomEmail);
+        System.out.printf("\nFind user by email (%s)...\n", randomEmail);
+        System.out.println(userByMail.getUsername());
+        System.out.println(userByMail.getEmail());
 
         // List all users
-        System.out.println("\nListing all users...");
         Iterable<User> iterator = userRepository.findAll();
+        System.out.println("\nListing all users...");
         iterator.forEach(user -> System.out.println(user.getUsername()));
 
         // Count number of users

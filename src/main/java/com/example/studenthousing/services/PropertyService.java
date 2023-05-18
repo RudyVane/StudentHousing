@@ -12,13 +12,48 @@ public class PropertyService {
     @Autowired
     private PropertyRepository propertyRepository;
 
-        public Property newProperty(String externalId, int areaSqm, String city) {
+    public Property newProperty(String externalId, int areaSqm, String city, String coverImageUrl, String furnish, String latitude, String longitude, String postalCode, String propertyType, String rawAvailability, int rent, String rentDetail, String title, int additionalCosts, int deposit, String descriptionNonTranslated, String descriptionTranslated, String energyLabel, String gender, String internet, String isRoomActive, String kitchen, String living, String matchAge, String matchCapacity, String matchGender, String matchLanguages, String matchStatus, String pageDescription, String pageTitle, String pets, int registrationCost, String roommates, String shower, String smokingInside, String toilet) {
         Property p = new Property();
         p.setExternalId(externalId);
         p.setAreaSqm(areaSqm);
         p.setCity(city);
+        p.setCoverImageUrl(coverImageUrl);
+        p.setFurnish(furnish);
+        p.setLatitude(latitude);
+        p.setLongitude(longitude);
+        p.setPostalCode(postalCode);
+        p.setPropertyType(propertyType);
+        p.setRawAvailability(rawAvailability);
+        p.setRent(rent);
+        p.setRentDetail(rentDetail);
+        p.setTitle(title);
+        p.setAdditionalCosts(additionalCosts);
+        p.setDeposit(deposit);
+        p.setDescriptionNonTranslated(descriptionNonTranslated);
+        p.setDescriptionTranslated(descriptionTranslated);
+        p.setEnergyLabel(energyLabel);
+        p.setGender(gender);
+        p.setInternet(internet);
+        p.setIsRoomActive(isRoomActive);
+        p.setKitchen(kitchen);
+        p.setLiving(living);
+        p.setMatchAge(matchAge);
+        p.setMatchCapacity(matchCapacity);
+        p.setMatchGender(matchGender);
+        p.setMatchLanguages(matchLanguages);
+        p.setMatchStatus(matchStatus);
+        p.setPageDescription(pageDescription);
+        p.setPageTitle(pageTitle);
+        p.setPets(pets);
+        p.setRegistrationCost(registrationCost);
+        p.setRoommates(roommates);
+        p.setShower(shower);
+        p.setSmokingInside(smokingInside);
+        p.setToilet(toilet);
+
         return propertyRepository.save(p);
     }
+
 
     public void test() {
         // Save a new Property
@@ -37,7 +72,7 @@ public class PropertyService {
 //        properties.forEach(property -> System.out.println(property));
 
         // List all Properties
-       // System.out.println("\nListing all Properties...");
+        // System.out.println("\nListing all Properties...");
         Iterable<Property> iterator = propertyRepository.findAll();
         //iterator.forEach(property -> System.out.println(property));
 
@@ -54,4 +89,3 @@ public class PropertyService {
         return propertyRepository.findAll();
     }
 }
-

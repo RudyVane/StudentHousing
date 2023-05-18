@@ -391,7 +391,45 @@ public class Property {
 
     @Override
     public String toString() {
-        return "Property [id=" + id + ", external_id=" + externalId + "]";
+        return "Property{" +
+                "id=" + id +
+                ", externalId='" + externalId + '\'' +
+                ", areaSqm=" + areaSqm +
+                ", city='" + city + '\'' +
+                ", coverImageUrl='" + coverImageUrl + '\'' +
+                ", furnish='" + furnish + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", propertyType='" + propertyType + '\'' +
+                ", rawAvailability='" + rawAvailability + '\'' +
+                ", rent=" + rent +
+                ", rentDetail='" + rentDetail + '\'' +
+                ", title='" + title + '\'' +
+                ", additionalCosts=" + additionalCosts +
+                ", deposit=" + deposit +
+                ", descriptionNonTranslated='" + descriptionNonTranslated + '\'' +
+                ", descriptionTranslated='" + descriptionTranslated + '\'' +
+                ", energyLabel='" + energyLabel + '\'' +
+                ", gender='" + gender + '\'' +
+                ", internet='" + internet + '\'' +
+                ", isRoomActive='" + isRoomActive + '\'' +
+                ", kitchen='" + kitchen + '\'' +
+                ", living='" + living + '\'' +
+                ", matchAge='" + matchAge + '\'' +
+                ", matchCapacity='" + matchCapacity + '\'' +
+                ", matchGender='" + matchGender + '\'' +
+                ", matchLanguages='" + matchLanguages + '\'' +
+                ", matchStatus='" + matchStatus + '\'' +
+                ", pageDescription='" + pageDescription + '\'' +
+                ", pageTitle='" + pageTitle + '\'' +
+                ", pets='" + pets + '\'' +
+                ", registrationCost=" + registrationCost +
+                ", roommates='" + roommates + '\'' +
+                ", shower='" + shower + '\'' +
+                ", smokingInside='" + smokingInside + '\'' +
+                ", toilet='" + toilet + '\'' +
+                '}';
     }
 
 

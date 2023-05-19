@@ -14,6 +14,7 @@ import java.util.Map;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
 public class RegisterController {
 
     @Autowired
@@ -81,6 +82,7 @@ public class RegisterController {
         }
 
         // Upon successful registering, show the newly registered user
+        System.out.println("New user created: " + newUser.getUsername());
         return new ResponseEntity<>(Map.of(
                 "username", newUser.getUsername(),
                 "email", newUser.getEmail(),

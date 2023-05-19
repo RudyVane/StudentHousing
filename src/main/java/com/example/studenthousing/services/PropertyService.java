@@ -62,9 +62,8 @@ public class PropertyService {
 
         propertyRepository.save(newProperty);
 
-        // Find a Property by ID
-        Optional<Property> result = propertyRepository.findById(1);
-        result.ifPresent(property -> System.out.println());
+
+
 
         // Find a Property by PropertyName
 //        System.out.println("\nFind Property by name (JPA-Property1)...");
@@ -80,10 +79,12 @@ public class PropertyService {
         long count = propertyRepository.count();
         System.out.println("Number of Properties: " + count);
     }
-
-    public Object getPropertyById(int id) {
-        return propertyRepository.findById(id);
+    public List<Property> getProperties() {
+        return propertyRepository.findFirst10Properties();
     }
+  /*  public Object getPropertyById(int id) {
+        return propertyRepository.findById(id);
+    }*/
 
     public Object getAllProperties() {
         return propertyRepository.findAll();

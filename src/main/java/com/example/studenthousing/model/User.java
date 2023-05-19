@@ -1,8 +1,6 @@
 package com.example.studenthousing.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.studenthousing.validation.ValidEmail;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,11 +18,14 @@ public class User {
     private String username;
     @Column(name="password")
     private String password;
+    @Transient
+    private String matching_password;
     @Column(name="registration_date")
     private LocalDateTime registrationDate;
     @Column(name="photo_url")
     private String photoURL;
     @Column(name="email")
+    @ValidEmail
     private String email;
     @Column(name="telephone")
     private String telephone;
@@ -131,6 +132,13 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+    public String getMatching_password() {
+        return matching_password;
+    }
+
+    public void setMatching_password(String matching_password) {
+        this.matching_password = matching_password;
     }
 
     public void setPassword(String password) {

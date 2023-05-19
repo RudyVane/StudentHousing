@@ -12,6 +12,7 @@ import java.util.List;
 import com.example.studenthousing.services.PropertyService;
 @RestController
 @RequestMapping("/property")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class PropertyController {
     @Autowired
     private PropertyService propertyService;

@@ -35,6 +35,7 @@ public class UserService {
         return userRepository.save(u);
     }
 
+
     public void test() {
         // Save a new user
         User newUser = new User();

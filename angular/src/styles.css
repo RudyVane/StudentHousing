@@ -1,0 +1,21 @@
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: darkblue;
+}
+
+p {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: blue;
+}
+
+button {
+  background-color: orange;
+  border-color: orangered;
+  color: white;
+}
+/* You can add global styles to this file, and also import other style files */
+

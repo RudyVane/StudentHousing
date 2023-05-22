@@ -1,0 +1,11 @@
+<h1>Properties</h1>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  <tr *ngFor="let property of properties">
+    <td>{{ property.id }}</td>
+    <td>{{ property.propertyName }}</td>
+  </tr>
+</table>

@@ -1,0 +1,9 @@
+<h2>Add new property</h2>
+
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="form-container">
+  <div class="form-row" *ngFor="let field of formFields">
+    <label>{{ field.label }}</label>
+    <input type="text" [id]="field.id" [formControlName]="field.name" [attr.required]="field.required ? '' : null">
+  </div>
+  <button type="submit">Submit</button>
+</form>

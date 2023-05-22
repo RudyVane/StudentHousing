@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private router: Router, private http: HttpClient) {}
 
   retrieveProperties(): void {
-    this.http.get<any[]>('http://localhost:8080/api/properties')
+    this.http.get<any[]>('http://localhost:8080/studenthousing/properties')
       .subscribe(data => {
         this.properties = data;
       });

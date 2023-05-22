@@ -78,7 +78,7 @@ export class UserAdvertisementComponent {
   submitForm() {
     if (this.form.valid) {
       const formData = JSON.stringify(this.form.value);
-      this.http.post('/user-advertisement', formData).subscribe(
+      this.http.post('http://localhost:8080/studenthousing/properties/user-advertisement', formData).subscribe(
         (response) => {
           console.log('Form submission successful:', response);
           // Handle any success logic here

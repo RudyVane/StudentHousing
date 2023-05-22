@@ -1,0 +1,14 @@
+.navbar {
+  background-color: lightblue;
+  padding: 25px 0px 25px 0;
+}
+
+.nav-item {
+  font-size: x-large;
+}
+
+.nav-item:hover {
+  background-color: floralwhite;
+  height: auto;
+}
+

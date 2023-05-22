@@ -13,6 +13,8 @@ import java.util.Map;
 
 
 @RestController
+@RequestMapping("/studenthousing")
+@CrossOrigin(origins = "http://localhost:4200") // Add this line to allow requests from Angular frontend
 public class PropertyController {
 
     @Autowired

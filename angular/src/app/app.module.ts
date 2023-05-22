@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { PropertyListComponent } from './property-list/property-list.component';
 import { UserAdvertisementComponent } from './user-advertisement/user-advertisement.component';
 import { SearchComponent } from './search/search.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SearchComponent } from './search/search.component';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule

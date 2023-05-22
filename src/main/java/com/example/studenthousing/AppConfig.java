@@ -28,10 +28,4 @@ public class AppConfig {
 
         return transactionManager;
     }
-
-
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

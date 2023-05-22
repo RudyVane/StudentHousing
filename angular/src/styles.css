@@ -26,6 +26,8 @@ button {
   background-color: orange;
   border-color: orangered;
   color: white;
+  width: max-content;
+  padding: 0 15px 0 15px;
 }
 
 

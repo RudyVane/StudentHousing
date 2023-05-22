@@ -13,6 +13,7 @@ import java.util.Map;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
 public class PropertyController {
 
     @Autowired
@@ -22,6 +23,7 @@ public class PropertyController {
 
     @GetMapping("/property")
     public ResponseEntity<String> registerGET() {
+
         return ResponseEntity.ok("It works!");
     }
 

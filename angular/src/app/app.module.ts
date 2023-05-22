@@ -11,6 +11,7 @@ import { UserAdvertisementComponent } from './user-advertisement/user-advertisem
 import { SearchComponent } from './search/search.component';
 import { TopnavComponent } from './topnav/topnav.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HomeComponent } from './home/home.component';
     UserAdvertisementComponent,
     SearchComponent,
     TopnavComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

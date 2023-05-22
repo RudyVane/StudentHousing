@@ -16,10 +16,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.formFields = [
-      { label: 'Username:', id: 'username', name: 'username', required: true },
-      { label: 'Email:', id: 'email', name: 'email', required: true },
-      { label: 'Password:', id: 'password', name: 'password', required: true },
-      { label: 'Confirm Password:', id: 'matching_password', name: 'matching_password', required: true }
+      { label: 'Username:', id: 'username', name: 'username', type: 'text', required: true },
+      { label: 'Email:', id: 'email', name: 'email', type: 'text', required: true },
+      { label: 'Password:', id: 'password', name: 'password', type: 'password', required: true },
+      { label: 'Confirm Password:', id: 'matching_password', name: 'matching_password', type: 'password', required: true }
     ];
 
     this.form = this.formBuilder.group({

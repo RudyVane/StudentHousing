@@ -5,11 +5,11 @@
           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="TestDB">
+    <persistence-unit name="StudentHousing">
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/student_housing" />
             <property name="javax.persistence.jdbc.user" value="root" />
-            <property name="javax.persistence.jdbc.password" value="eT@VseTvVttPHQAz" />
+            <property name="javax.persistence.jdbc.password" value="" />
 <!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />-->
             <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.show_sql" value="false" />

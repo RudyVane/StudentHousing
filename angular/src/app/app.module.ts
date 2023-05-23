@@ -12,6 +12,7 @@ import { SearchComponent } from './search/search.component';
 import { TopnavComponent } from './topnav/topnav.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LoginComponent } from './login/login.component';
     SearchComponent,
     TopnavComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

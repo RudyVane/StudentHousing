@@ -2,7 +2,6 @@ package com.example.studenthousing.controller;
 
 import com.example.studenthousing.AppException;
 import com.example.studenthousing.form.LoginForm;
-import com.example.studenthousing.model.CustomUserDetails;
 import com.example.studenthousing.model.User;
 import com.example.studenthousing.repository.UserRepository;
 import com.example.studenthousing.services.UserService;
@@ -11,8 +10,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,12 +22,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Map;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200/")
 @DependsOn("securityFilterChain")
 public class LoginController {
 
@@ -70,7 +65,9 @@ public class LoginController {
         try {
             request.login(form.getUsername(), form.getPassword());
         } catch (ServletException e) {
-            throw new AppException("Invalid username of password");
+            throw new AppException("Invalid username or password");
+        } catch (AppException a) {
+            System.out.println(a.getMessage());
         }
 
         var auth = (Authentication) request.getUserPrincipal();

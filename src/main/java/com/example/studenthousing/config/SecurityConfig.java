@@ -17,10 +17,12 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 public class SecurityConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -31,8 +33,8 @@ public class SecurityConfig implements WebMvcConfigurer {
     }
 
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200");
+        registry.addMapping("/**");
+//                .allowedOrigins("http://localhost:4200");
     }
 
     @Autowired
@@ -40,7 +42,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean ("securityFilterChain")
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        var chain = http
+        var chain = http.cors().and()
+                .csrf().disable()
                 .authorizeHttpRequests(customizer -> customizer
                         .antMatchers("/csrf").permitAll()
                         .antMatchers("/login").permitAll()

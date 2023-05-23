@@ -20,11 +20,11 @@ public class UserService {
 
     public User registerNewUser(String username, String email, String password) {
 
-        List<User> userExists = userRepository.findByUsername(username);
-        List<User> emailExists = userRepository.findByEmail(email);
-        if (!userExists.isEmpty()) {
+        User userExists = userRepository.findByUsername(username);
+        User emailExists = userRepository.findByEmail(email);
+        if (userExists != null) {
             throw new UserAlreadyExistException("Username already exists!");
-        } else if (!emailExists.isEmpty()) {
+        } else if (emailExists != null) {
             throw new UserAlreadyExistException("Email address is already used!");
         }
 
@@ -55,20 +55,16 @@ public class UserService {
         result.ifPresent(user -> System.out.println(user.getUsername()));
 
         // Find a user by username
-        List<User> users = userRepository.findByUsername(randomUsername);
-        users.forEach(user -> {
-            System.out.printf("\nFind user by name (%s)...\n", randomUsername);
-            System.out.println(user.getUsername());
-            System.out.println(user.getEmail());
-        });
+        User userByName = userRepository.findByUsername(randomUsername);
+        System.out.printf("\nFind user by name (%s)...\n", randomUsername);
+        System.out.println(userByName.getUsername());
+        System.out.println(userByName.getEmail());
 
         // Find a user by email address
-        List<User> usersByMail = userRepository.findByEmail(randomEmail);
-        usersByMail.forEach(user -> {
-            System.out.printf("\nFind user by email (%s)...\n", randomEmail);
-            System.out.println(user.getUsername());
-            System.out.println(user.getEmail());
-        });
+        User userByMail = userRepository.findByEmail(randomEmail);
+        System.out.printf("\nFind user by email (%s)...\n", randomEmail);
+        System.out.println(userByMail.getUsername());
+        System.out.println(userByMail.getEmail());
 
         // List all users
         Iterable<User> iterator = userRepository.findAll();

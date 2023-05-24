@@ -1,0 +1,55 @@
+.property-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the items horizontally */
+}
+
+.property-card {
+  width: 250px;
+  margin: 20px;
+  transition: flex-grow 0.3s; /* Add transition for smooth animation */
+}
+
+.contact .read-more {
+  width: 100px;
+  height:30px;
+}
+
+.property-image {
+  position: relative;
+}
+
+.property-image img {
+  display: block;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.property-details {
+  flex: 1;
+}
+
+.property-card.expanded {
+  flex-grow: 1;
+  flex-basis: 75%;
+  max-width: 75%;
+}
+
+.expanded-details {
+  flex-basis: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.expanded-details p {
+  flex-basis: 48%; /* Adjust the width of each column */
+}
+.contact-form {
+  display: none; /* Hide the contact form by default */
+}
+
+.contact-form.show {
+  display: block; /* Show the contact form when the 'showContactForm' flag is set */
+}

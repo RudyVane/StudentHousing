@@ -1,0 +1,50 @@
+<h1>Details</h1>
+  <div *ngIf="property$ | async as property">
+    <h2>{{ property.title }}</h2>
+    <img [src]="property.coverImageUrl" alt="Cover Image" />
+    <!-- Display other property details -->
+  </div>
+
+
+
+  <div class="property-details">
+      <p>{{ property.city }} - {{ property.propertyType }}</p>
+      <p>{{ property.title }}, {{ property.postalCode }}</p>
+      <p><strong>Rent:</strong> € {{ property.rent }}<strong> Additional Costs:</strong> € {{ property.additionalCosts }}</p>
+      <p><strong>Deposit:</strong> € {{ property.deposit }}</p>
+      <p><strong>Area (sqm):</strong> {{ property.areaSqm }}</p>
+      <p><strong>Furnish:</strong> {{ property.furnish }}</p>
+      <p><strong>Latitude:</strong> {{ property.latitude }}</p>
+      <p><strong>Longitude:</strong> {{ property.longitude }}</p>
+      <p><strong>Raw Availability:</strong> {{ property.rawAvailability }}</p>
+      <p><strong>Rent:</strong> {{ property.rent }}</p>
+      <p><strong>Rent Detail:</strong> {{ property.rentDetail }}</p>
+      <p><strong>Title:</strong> {{ property.title }}</p>
+      <p><strong>Additional Costs:</strong> {{ property.additionalCosts }}</p>
+      <p><strong>Deposit:</strong> {{ property.deposit }}</p>
+      <p><strong>Description (Non-translated):</strong> {{ property.descriptionNonTranslated }}</p>
+      <p><strong>Description (Translated):</strong> {{ property.descriptionTranslated }}</p>
+      <p><strong>Energy Label:</strong> {{ property.energyLabel }}</p>
+      <p><strong>Gender:</strong> {{ property.gender }}</p>
+      <p><strong>Internet:</strong> {{ property.internet }}</p>
+      <p><strong>Is Room Active:</strong> {{ property.isRoomActive }}</p>
+      <p><strong>Kitchen:</strong> {{ property.kitchen }}</p>
+      <p><strong>Living:</strong> {{ property.living }}</p>
+      <p><strong>Match Age:</strong> {{ property.matchAge }}</p>
+      <p><strong>Match Capacity:</strong> {{ property.matchCapacity }}</p>
+      <p><strong>Match Gender:</strong> {{ property.matchGender }}</p>
+      <p><strong>Match Languages:</strong> {{ property.matchLanguages }}</p>
+      <p><strong>Match Status:</strong> {{ property.matchStatus }}</p>
+      <p><strong>Page Description:</strong> {{ property.pageDescription }}</p>
+      <p><strong>Page Title:</strong> {{ property.pageTitle }}</p>
+      <p><strong>Pets:</strong> {{ property.pets }}</p>
+      <p><strong>Registration Costs:</strong> {{ property.registrationCost }}</p>
+      <p><strong>Roommates:</strong> {{ property.roommates }}</p>
+      <p><strong>Shower:</strong> {{ property.shower }}</p>
+      <p><strong>Smoking Inside:</strong> {{ property.smokingInside }}</p>
+      <p><strong>Toilet:</strong> {{ property.toilet }}</p>
+      </div>
+
+
+
+

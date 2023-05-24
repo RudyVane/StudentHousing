@@ -5,28 +5,86 @@ import com.example.studenthousing.repository.PropertyRepository;
 import com.example.studenthousing.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/studenthousing")
-@CrossOrigin(origins = "http://localhost:4200") // Add this line to allow requests from Angular frontend
+//@RequestMapping("/studenthousing")
+@CrossOrigin(origins = "http://localhost:4200/")
+
 public class PropertyController {
 
     @Autowired
     private PropertyRepository propertyRepository;
     @Autowired
     private PropertyService propertyService;
-
-    @GetMapping("/property")
-    public ResponseEntity<String> registerGET() {
-        return ResponseEntity.ok("It works!");
+    public PropertyController(PropertyService propertyService) {
+        this.propertyService = propertyService;
     }
+    @GetMapping("/property")
+    public ResponseEntity<Page<Property>> getPropertyList() {
+        Page<Property> properties = propertyService.getProperties();
+        return ResponseEntity.ok(properties);
+    }
+    @GetMapping("/property/{id}")
+    public ResponseEntity<?> getPropertyById(@PathVariable("id") int id) {
+        Optional<Property> propertyOptional = propertyService.getPropertyById(id);
+        if (propertyOptional.isEmpty()) {
+            return new ResponseEntity<>(Map.of("error", "Property not found"), HttpStatus.NOT_FOUND);
+        }
 
+        Property property = propertyOptional.get();
+
+        // Create a HashMap to store the property details
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("id", property.getId());
+        responseMap.put("external_id", property.getExternalId());
+        responseMap.put("area_sqm", property.getAreaSqm());
+        responseMap.put("city", property.getCity());
+        responseMap.put("cover_image_url", property.getCoverImageUrl());
+        responseMap.put("furnish", property.getFurnish());
+        responseMap.put("latitude", property.getLatitude());
+        responseMap.put("longitude", property.getLongitude());
+        responseMap.put("postal_code", property.getPostalCode());
+        responseMap.put("property_type", property.getPropertyType());
+        responseMap.put("raw_availability", property.getRawAvailability());
+        responseMap.put("rent", property.getRent());
+        responseMap.put("rent_detail", property.getRentDetail());
+        responseMap.put("title", property.getTitle());
+        responseMap.put("additional_costs", property.getAdditionalCosts());
+        responseMap.put("deposit", property.getDeposit());
+        responseMap.put("description_non_translated", property.getDescriptionNonTranslated());
+        responseMap.put("description_translated", property.getDescriptionTranslated());
+        responseMap.put("energy_label", property.getEnergyLabel());
+        responseMap.put("gender", property.getGender());
+        responseMap.put("internet", property.getInternet());
+        responseMap.put("is_room_active", property.getIsRoomActive());
+        responseMap.put("kitchen", property.getKitchen());
+        responseMap.put("living", property.getLiving());
+        responseMap.put("match_age", property.getMatchAge());
+        responseMap.put("match_capacity", property.getMatchCapacity());
+        responseMap.put("match_gender", property.getMatchGender());
+        responseMap.put("match_languages", property.getMatchLanguages());
+        responseMap.put("match_status", property.getMatchStatus());
+        responseMap.put("page_description", property.getPageDescription());
+        responseMap.put("page_title", property.getPageTitle());
+        responseMap.put("pets", property.getPets());
+        responseMap.put("registration_costs", property.getRegistrationCost());
+        responseMap.put("roommates", property.getRoommates());
+        responseMap.put("shower", property.getShower());
+        responseMap.put("smoking_inside", property.getSmokingInside());
+        responseMap.put("toilet", property.getToilet());
+        responseMap.put("status", "Property retrieved!");
+
+        return new ResponseEntity<>(responseMap, HttpStatus.OK);
+    }
     // Check the request for correct input
     @PostMapping("/property")
     public ResponseEntity<?> register (@RequestBody Property property){
@@ -39,7 +97,7 @@ public class PropertyController {
                     HttpStatus.BAD_REQUEST);
         }
         Property newProperty = propertyService.newProperty(
-                property.getExternalId(), property.getAreaSqm(), property.getCity(),
+                property.getId(),property.getExternalId(), property.getAreaSqm(), property.getCity(),
                 property.getCoverImageUrl(), property.getFurnish(), property.getLatitude(),
                 property.getLongitude(), property.getPostalCode(), property.getPropertyType(),
                 property.getRawAvailability(), property.getRent(), property.getRentDetail(),
@@ -55,6 +113,7 @@ public class PropertyController {
         );
         // Create a HashMap to store the property details
         HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("id", property.getId());
         responseMap.put("external_id", newProperty.getExternalId());
         responseMap.put("area_sqm", newProperty.getAreaSqm());
         responseMap.put("city", newProperty.getCity());

@@ -10,6 +10,8 @@ import { PropertyListComponent } from './property-list/property-list.component';
 import { UserAdvertisementComponent } from './user-advertisement/user-advertisement.component';
 import { SearchComponent } from './search/search.component';
 import { CommonModule } from '@angular/common';
+// import { PropertyDetailsComponent } from './property-details/property-details.component';
+
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { CommonModule } from '@angular/common';
     PropertyListComponent,
     UserAdvertisementComponent,
     SearchComponent
+    // PropertyDetailsComponent
+
   ],
   imports: [
     BrowserModule,

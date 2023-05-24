@@ -1,0 +1,40 @@
+export interface Property {
+  id: number;
+  externalId: string;
+  areaSqm: number;
+  city: string;
+  coverImageUrl: string;
+  furnish: string;
+  latitude: string;
+  longitude: string;
+  postalCode: string;
+  propertyType: string;
+  rawAvailability: string;
+  rent: number;
+  rentDetail: string;
+  title: string;
+  additionalCosts: number;
+  deposit: number;
+  descriptionNonTranslated: string;
+  descriptionTranslated: string;
+  energyLabel: string;
+  gender: string;
+  internet: string;
+  isRoomActive: string;
+  kitchen: string;
+  living: string;
+  matchAge: string;
+  matchCapacity: string;
+  matchGender: string;
+  matchLanguages: string;
+  matchStatus: string;
+  pageDescription: string;
+  pageTitle: string;
+  pets: string;
+  registrationCost: number;
+  roommates: string;
+  shower: string;
+  smokingInside: string;
+  toilet: string;
+}
+

@@ -32,16 +32,16 @@ export class RegisterComponent implements OnInit {
 
   submitForm() {
     if (this.form.valid) {
-      this.http.post('http://localhost:8080/register', this.form.value).subscribe(
-        (response) => {
-          console.log('Form submission successful:', response);
-          // Handle any success logic here
-        },
-        (error) => {
-          console.error('Form submission error:', error);
-          // Handle any error logic here
-        }
-      );
+        this.http.post('/api/register', this.form.value).subscribe(
+          (response) => {
+            console.log('Form submission successful:', response);
+            // Handle any success logic here
+          },
+          (error) => {
+            console.error('Form submission error:', error.error);
+            // Handle any error logic here
+          }
+        );
     } else {
       // Form is invalid, display error messages or take appropriate action
     }

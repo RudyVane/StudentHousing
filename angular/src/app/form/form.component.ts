@@ -92,7 +92,7 @@ export class FormComponent implements OnInit {
   submitForm() {
     if (this.form.valid) {
       const formData = JSON.stringify(this.form.value);
-      this.http.post('http://localhost:8080/studenthousing/properties', formData).subscribe(
+      this.http.post('http://localhost:8080/properties', formData).subscribe(
         (response) => {
           console.log('Form submission successful:', response);
           // Handle any success logic here

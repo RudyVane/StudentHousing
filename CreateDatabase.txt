@@ -1,3 +1,40 @@
+// RAQ SQL
+// CREATE 'user' TABLE
+
+CREATE TABLE `testuser` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `language` varchar(255) DEFAULT NULL,
+  `max_rent` int(11) DEFAULT NULL,
+  `photo_url` varchar(255) DEFAULT NULL,
+  `pref_city` varchar(255) DEFAULT NULL,
+  `pref_distance_to_zipcode` varchar(255) DEFAULT NULL,
+  `pref_energy_label` varchar(255) DEFAULT NULL,
+  `pref_gender` varchar(255) DEFAULT NULL,
+  `pref_internet` varchar(255) DEFAULT NULL,
+  `pref_kitchen` varchar(255) DEFAULT NULL,
+  `pref_living` varchar(255) DEFAULT NULL,
+  `pref_pets` varchar(255) DEFAULT NULL,
+  `pref_roommates` varchar(255) DEFAULT NULL,
+  `pref_shower` varchar(255) DEFAULT NULL,
+  `pref_smoking_inside` varchar(255) DEFAULT NULL,
+  `pref_toilet` varchar(255) DEFAULT NULL,
+  `pref_zipcode` varchar(255) DEFAULT NULL,
+  `registration_date` datetime DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `telephone` varchar(255) DEFAULT NULL,
+  `ad_active` boolean DEFAULT false,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY (`username`)
+) 
+
+
 package com.example.studenthousing;
 import java.io.BufferedReader;
 import java.io.FileReader;

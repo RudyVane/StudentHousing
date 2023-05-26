@@ -34,4 +34,18 @@ public class AppConfig {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Configuration
+    public class EmailConfig {
+        private final String senderEmail = "your-sender-email@example.com"; // Replace with your sender email
+        private final String senderPassword = "your-sender-password"; // Replace with your sender email password
+        private final String smtpHost = "your-smtp-host"; // Replace with your SMTP host (e.g., "smtp.gmail.com")
+        private final int smtpPort = 587; // Replace with your SMTP port (e.g., 587 for TLS)
+
+        @Bean
+        public EmailSender emailSender() {
+            return new EmailSender(senderEmail, senderPassword, smtpHost, smtpPort);
+        }
+    }
+
 }

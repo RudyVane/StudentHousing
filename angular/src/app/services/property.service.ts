@@ -14,6 +14,9 @@ export class PropertyService {
   createProperty(property: Property): Observable<Property> {
     return this.http.post<Property>(`${this.apiUrl}/newProperty`, property);
   }
+  findAllDistinctCities(): Observable<{ cities: string[] }> {
+    return this.http.get<{ cities: string[] }>('http://localhost:8080/property/distinct-cities');
+  }
 
   getProperties(): Observable<Property[]> {
     return this.http.get<Property[]>(`${this.apiUrl}/getProperties`);

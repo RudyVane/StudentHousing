@@ -29,11 +29,22 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
     @GetMapping("/property")
-    public ResponseEntity<Page<Property>> getPropertyList() {
-        Page<Property> properties = propertyService.getProperties();
+    public ResponseEntity<Page<Property>> getPropertyList(@RequestParam(required = false) String city) {
+        Page<Property> properties;
+        if (city != null) {
+            properties = propertyService.getPropertiesByCity(city);
+
+        } else {
+            properties = propertyService.getProperties();
+        }
         return ResponseEntity.ok(properties);
     }
-    @GetMapping("/property/{id}")
+    @GetMapping("/property/distinct-cities")
+    public ResponseEntity<List<String>> getDistinctCities() {
+        List<String> cities = propertyService.getDistinctCities();
+        return ResponseEntity.ok(cities);
+    }
+        @GetMapping("/property/{id}")
     public ResponseEntity<?> getPropertyById(@PathVariable("id") int id) {
         Optional<Property> propertyOptional = propertyService.getPropertyById(id);
         if (propertyOptional.isEmpty()) {

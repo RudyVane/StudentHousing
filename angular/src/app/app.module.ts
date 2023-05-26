@@ -10,7 +10,10 @@ import { PropertyListComponent } from './property-list/property-list.component';
 import { UserAdvertisementComponent } from './user-advertisement/user-advertisement.component';
 import { SearchComponent } from './search/search.component';
 import { CommonModule } from '@angular/common';
-// import { PropertyDetailsComponent } from './property-details/property-details.component';
+import { ContactformComponent } from './contactform/contactform.component';
+import { FormsModule } from '@angular/forms';
+
+
 
 
 @NgModule({
@@ -20,7 +23,8 @@ import { CommonModule } from '@angular/common';
     RegisterComponent,
     PropertyListComponent,
     UserAdvertisementComponent,
-    SearchComponent
+    SearchComponent,
+    ContactformComponent
     // PropertyDetailsComponent
 
   ],
@@ -29,6 +33,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers: [HttpClient],

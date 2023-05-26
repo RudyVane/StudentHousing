@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,9 @@ public class PropertyService {
     @Autowired
     private PropertyRepository propertyRepository;
     private EntityManagerFactory entityManagerFactory;
+    public PropertyService(PropertyRepository propertyRepository) {
+        this.propertyRepository = propertyRepository;
+    }
     public PropertyService() {
         // Create the EntityManagerFactory
         entityManagerFactory = Persistence.createEntityManagerFactory("StudentHousing");
@@ -70,6 +74,14 @@ public class PropertyService {
     public Optional<Property> getPropertyById(int propertyId) {
         return propertyRepository.findById(propertyId);
     }
+    public List<String> getDistinctCities() {
+        return propertyRepository.findAllDistinctCities();
+    }
+    public Page<Property> getPropertiesByCity(String city) {
+        Pageable pageable = PageRequest.of(0, 12);
+        return propertyRepository.findByCity(city,pageable);
+    }
+
     public void test() {
         // Implementation of the test method
         System.out.println("Testing PropertyService");

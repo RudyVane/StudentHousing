@@ -1,11 +1,9 @@
 package com.example.studenthousing.controller;
 
 import com.example.studenthousing.model.User;
-import com.example.studenthousing.repository.UserRepository;
 import com.example.studenthousing.services.UserService;
 import com.example.studenthousing.validation.error.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +14,6 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/")
 public class RegisterController {
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private UserService userService;
 

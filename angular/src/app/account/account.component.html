@@ -1,0 +1,15 @@
+<div class="content">
+  <h1>Your account</h1>
+  <table class="table">
+    <tr>
+      <td>Username</td>
+      <td>Email</td>
+    </tr>
+    <tr *ngFor="let detail of accountDetails">
+      <td>{{ detail.username }}</td>
+      <td>{{ detail.email }}</td>
+    </tr>
+  </table>
+
+
+</div>

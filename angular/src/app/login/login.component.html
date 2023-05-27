@@ -1,0 +1,18 @@
+<div class="content">
+  <h1>Login</h1>
+  <div class="row align-items-center">
+    <form [formGroup]="userDetails" (ngSubmit)="onSubmit()">
+      <div class="col-auto">
+        <label for="username">Username</label>
+        <input class="form-control" id="username" type="text" formControlName="username">
+      </div>
+      <div class="col-auto">
+        <label for="password">Password</label>
+        <input class="form-control" id="password" type="password" formControlName="password">
+      </div>
+      <div class="col-auto">
+        <button class="button" type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+</div>

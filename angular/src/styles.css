@@ -1,23 +1,35 @@
+/* This file contains all global styles */
+
+/* All content of a page should be wrapped in a div with the content class */
+.content {
+  max-width: 1450px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 body {
-  background-color: lightblue;
+  background-color: floralwhite;
 }
 
 h1 {
   color: darkblue;
+  margin: 10px 0px 15px 0px;
 }
 
 p {
   font-family: Arial, sans-serif;
-  font-size: 14px;
-  color: blue;
+  font-size: medium;
+  color: black;
 }
 
 button {
   background-color: orange;
   border-color: orangered;
   color: white;
+  width: max-content;
+  padding: 0 15px 0 15px;
 }
-/* You can add global styles to this file, and also import other style files */
+
 
 
 html, body { height: 100%; }

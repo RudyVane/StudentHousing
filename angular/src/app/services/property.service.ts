@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable, switchMap} from 'rxjs';
 import { Property } from '../models/property';
+import { Page} from '../property-list/property-list.component';
+import { Pageable } from '../models/pageable';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertyService {
-  private apiUrl = 'http://localhost:8080/property'; // Replace with your API endpoint URL
+  private apiUrl = 'http://localhost:8080/property';
+  private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 
@@ -18,10 +21,10 @@ export class PropertyService {
     return this.http.get<{ cities: string[] }>('http://localhost:8080/property/distinct-cities');
   }
 
-  getProperties(): Observable<Property[]> {
-    return this.http.get<Property[]>(`${this.apiUrl}/getProperties`);
+  getProperties(page: number, pageSize: number): Observable<Page<Property>> {
+    const offset = (page - 1) * pageSize;
+    return this.http.get<Page<Property>>(`${this.apiUrl}/properties?page=${page}&size=${pageSize}&offset=${offset}`);
   }
-
   getPropertyById(propertyId: string | null): Observable<Property> {
     return this.http.get<Property>(`${this.apiUrl}/getProperty/${propertyId}`);
   }

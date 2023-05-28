@@ -1,5 +1,6 @@
 export interface Property {
   id: number;
+  userId: number;
   externalId: string;
   areaSqm: number;
   city: string;

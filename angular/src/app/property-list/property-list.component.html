@@ -1,3 +1,5 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+
 <h1>Properties</h1>
 
 <div class="property-filter">
@@ -7,10 +9,10 @@
     <option *ngFor="let city of distinctCities" [value]="city">{{ city }}</option>
   </select>
 
-  <label for="maxRent">Max Rent:</label>
+  <label for="maxRent">     Max Rent:</label>
   <input type="number" id="maxRent" name="maxRent" [(ngModel)]="maxRent">
 
-  <label for="gender">Gender:</label>
+  <label for="gender">     Gender:</label>
   <select id="gender" name="gender" [(ngModel)]="selectedGender">
     <option value="">All</option>
     <option value="Male">Male</option>
@@ -32,7 +34,8 @@
     <div class="property-details">
       <p>{{ property.city }} - {{ property.propertyType }}</p>
       <p>{{ property.title }}, {{ property.postalCode }}</p>
-      <p><strong>Rent:</strong> € {{ property.rent }}<strong> Additional Costs:</strong> € {{ property.additionalCosts }}</p>
+      <p><strong>Rent:</strong> € {{ property.rent }}</p>
+      <p><strong> Additional Costs:</strong> € {{ property.additionalCosts }}</p>
       <p><strong>Deposit:</strong> € {{ property.deposit }}</p>
 
       <button class="read-more" (click)="showDetails(property)">Read more</button>
@@ -81,9 +84,31 @@
         <p><strong>Smoking Inside:</strong> {{ property.smokingInside }}</p>
         <p><strong>Toilet:</strong> {{ property.toilet }}</p>
 
-        <div id="map" style="height: 300px;"></div> <!-- Google Maps container -->
-          <img src="http://maps.google.com/?q=[property.latitude],[property.longitude]">
+        <div id="map"></div>
+
+        <script>
+          function createStaticMap(latitude, longitude) {
+            var map = L.map('map').setView([latitude, longitude], 13);
+
+            // Add the OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+              maxZoom: 18,
+            }).addTo(map);
+
+            // Add a marker at the specified coordinates
+            L.marker([latitude, longitude]).addTo(map);
+          }
+
+          // Get the latitude and longitude values from the property object
+          var latitude = "{{ property.latitude }}";
+          var longitude = "{{ property.longitude }}";
+
+          // Call the createStaticMap function with the latitude and longitude
+          createStaticMap(parseFloat(latitude), parseFloat(longitude));
+        </script>
+
+      </div>
     </div>
   </div>
-</div>
-</div>
+  </div>

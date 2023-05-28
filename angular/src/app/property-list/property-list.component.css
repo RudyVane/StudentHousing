@@ -5,14 +5,14 @@
 }
 
 .property-card {
-  width: 250px;
+  width: 15%; /* Adjust the width to fit 5 items on a row */
   margin: 20px;
   transition: flex-grow 0.3s; /* Add transition for smooth animation */
 }
 
 .contact .read-more {
   width: 100px;
-  height:30px;
+  height: 30px;
 }
 
 .property-image {
@@ -32,8 +32,8 @@
 
 .property-card.expanded {
   flex-grow: 1;
-  flex-basis: 75%;
-  max-width: 75%;
+  flex-basis: 80%;
+  max-width: 80%;
 }
 
 .expanded-details {
@@ -46,10 +46,41 @@
 .expanded-details p {
   flex-basis: 48%; /* Adjust the width of each column */
 }
+
 .contact-form {
   display: none; /* Hide the contact form by default */
 }
 
 .contact-form.show {
   display: block; /* Show the contact form when the 'showContactForm' flag is set */
+}
+
+.property-filter {
+  margin-bottom: 20px;
+}
+
+.property-filter label {
+  margin-right: 10px;
+}
+
+.property-filter select,
+.property-filter input[type="number"] {
+  margin-right: 10px;
+}
+
+.property-filter .apply-button {
+  margin-left: 10px;
+}
+
+/* Adjust text size based on screen size */
+@media (max-width: 768px) {
+  .property-card {
+    width: 40%; /* Reduce the width to fit 2 items on a row */
+  }
+}
+
+@media (max-width: 480px) {
+  .property-card {
+    width: 100%; /* Set the width to 100% for single item on a row */
+  }
 }

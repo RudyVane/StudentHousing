@@ -1,12 +1,9 @@
-<app-topnav></app-topnav>
+<img src="{{ logoUrl }}" alt="Logo"><br><br>
 
-
-<div class="content">
-  <button (click)="showFormComponent()">New property</button>
-  <button (click)="showRegisterComponent()">new user</button>
-  <button (click)="showListComponent()">Top 10 properties</button>
-  <button (click)="showUserAddComponent()">Write Advertisement</button>
-</div>
+<button (click)="showFormComponent()">New property</button>
+<button (click)="showRegisterComponent()">New user</button>
+<button (click)="showListComponent()">Properties</button>
+<button (click)="showUserAddComponent()">Write Advertisement</button>
 
 <router-outlet></router-outlet>
 

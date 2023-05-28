@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PropertyService } from '../services/property.service';
-import {Observable} from "rxjs";
+import {Observable, of, switchMap, tap} from "rxjs";
+import { Property } from '../models/property'; // Update the path if necessary
+import { catchError, map } from 'rxjs/operators';
 
-interface Page<T> {
-  // Define the structure of the Page interface here
+export interface Page<T> {
   content: T[];
   totalPages: number;
   totalElements: number;
@@ -15,51 +16,9 @@ interface Page<T> {
   last: boolean;
   numberOfElements: number;
   empty: boolean;
-  properties?: Property[];
-
+  properties: Property[];
 }
 
-interface Property {
-  // Define the structure of the Property interface here
-  id: number;
-  externalId: string;
-  userId: number;
-  areaSqm: number;
-  city: string;
-  coverImageUrl: string;
-  furnish: string;
-  latitude: string;
-  longitude: string;
-  postalCode: string;
-  propertyType: string;
-  rawAvailability: string;
-  rent: number;
-  rentDetail: string;
-  title: string;
-  additionalCosts: number;
-  deposit: number;
-  descriptionNonTranslated: string;
-  descriptionTranslated: string;
-  energyLabel: string;
-  gender: string;
-  internet: string;
-  isRoomActive: string;
-  kitchen: string;
-  living: string;
-  matchAge: string;
-  matchCapacity: string;
-  matchGender: string;
-  matchLanguages: string;
-  matchStatus: string;
-  pageDescription: string;
-  pageTitle: string;
-  pets: string;
-  registrationCost: number;
-  roommates: string;
-  shower: string;
-  smokingInside: string;
-  toilet: string;
-}
 
 @Component({
   selector: 'app-property-list',
@@ -67,6 +26,7 @@ interface Property {
   styleUrls: ['./property-list.component.css']
 })
 export class PropertyListComponent implements OnInit {
+  apiUrl = 'http://localhost:8080/property';
   properties: Page<Property> = {
     content: [],
     totalPages: 0,
@@ -79,15 +39,17 @@ export class PropertyListComponent implements OnInit {
     empty: false,
     properties: []
   };
+
   fallbackImageUrl = 'assets/No-image-available.jpg';
   selectedProperty: Property | null = null;
   showContactForm: boolean = false; // Define the showContactForm property
   selectedCity: string = '';
-  maxRent: number | null = null;
+  maxRent: number = 1500;
   selectedGender: string = '';
-
+  id: number = 2;
   distinctCities: string[] = [];
-  constructor(
+  currentPage = 1;
+   constructor(
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -97,25 +59,11 @@ export class PropertyListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProperties();
+    this.applyFilters();
     this.getDistinctCities();
   }
-
   onCitySelect(event: any) {
     this.selectedCity = event.target.value;
-  }
-  getProperties(): void {
-    this.http.get<Page<Property>>('http://localhost:8080/property')
-      .subscribe(
-        (data: Page<Property>) => {
-          this.properties = data;
-          this.getDistinctCities();
-
-        },
-        error => {
-          console.error('Error retrieving properties:', error);
-        }
-      );
   }
 
   handleImageError(event: any): void {
@@ -136,7 +84,7 @@ export class PropertyListComponent implements OnInit {
       (data: { cities: string[] }) => {
         this.distinctCities = data.toString().split(","); //data.split(",");
         if (this.distinctCities.length > 0) {
-          this.selectedCity = this.distinctCities[0]; // Select the first city by default
+          this.selectedCity = "all cities";
         }
       },
       error => {
@@ -145,11 +93,6 @@ export class PropertyListComponent implements OnInit {
     );
 
   }
-
-
-
-
-
 
   applyFilters(): void {
     console.log('Apply Filters clicked');
@@ -174,14 +117,33 @@ export class PropertyListComponent implements OnInit {
         console.log(data); // Log the API response
         this.properties = data;
 
-        // Show only the first 20 properties
-        this.properties.content = this.properties.content.slice(0, 20);
+        // Filter the properties based on the selected criteria
+        this.properties.content = this.properties.content.filter(property => {
+          let meetsCriteria = true;
+
+          if (this.selectedCity && property.city !== this.selectedCity) {
+            meetsCriteria = false;
+          }
+
+          if (this.maxRent && property.rent > this.maxRent) {
+            meetsCriteria = false;
+          }
+
+          if (this.selectedGender && property.gender !== this.selectedGender) {
+            meetsCriteria = false;
+          }
+
+          return meetsCriteria;
+        });
+
+        this.properties.content = this.properties.content.slice(0, 100);
       },
       (error) => {
         console.error('Error retrieving properties:', error);
       }
     );
   }
+
 
 
 

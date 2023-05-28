@@ -14,6 +14,7 @@ import java.util.Map;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
 public class RegisterController {
     @Autowired
     private UserRepository userRepository;

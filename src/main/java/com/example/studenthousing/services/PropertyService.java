@@ -68,9 +68,10 @@ public class PropertyService {
         return propertyRepository.save(p);
     }
     public Page<Property> getProperties() {
-        Pageable pageable = PageRequest.of(0, 12);
+        Pageable pageable = PageRequest.of(0, 100);
         return propertyRepository.findAll(pageable);
     }
+
     public Optional<Property> getPropertyById(int propertyId) {
         return propertyRepository.findById(propertyId);
     }
@@ -78,12 +79,17 @@ public class PropertyService {
         return propertyRepository.findAllDistinctCities();
     }
     public Page<Property> getPropertiesByCity(String city) {
-        Pageable pageable = PageRequest.of(0, 12);
+        Pageable pageable = PageRequest.of(0, 100);
         return propertyRepository.findByCity(city,pageable);
     }
-
+    public Page<Property> getPropertiesById(int id) {
+        Pageable pageable = PageRequest.of(0, 100);
+        return propertyRepository.findById(id,pageable);
+    }
     public void test() {
         // Implementation of the test method
         System.out.println("Testing PropertyService");
     }
+
+
 }

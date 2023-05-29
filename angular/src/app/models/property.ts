@@ -1,4 +1,5 @@
 export interface Property {
+  rentPerSqm: number;
   id: number;
   userId: number;
   externalId: string;

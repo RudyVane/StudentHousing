@@ -23,7 +23,7 @@ public class ContactFormController {
     @PostMapping("/contact")
     public ResponseEntity<String> submitContactForm(@RequestBody ContactForm contactForm) {
         try {
-            String recipientEmail = "your-email@example.com";  // Replace with your desired recipient email address
+            String recipientEmail = "codegorilla9@gmail.com";  // Replace with your desired recipient email address
             String subject = "New Contact Form Submission";
             String body = "Name: " + contactForm.getName() + "\n"
                     + "Email: " + contactForm.getEmail() + "\n"

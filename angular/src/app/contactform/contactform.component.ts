@@ -37,7 +37,7 @@ export class ContactformComponent {
       message: this.message
     };
 
-    this.http.post('/api/contact', contactForm).subscribe(
+    this.http.post('/property/contact', contactForm).subscribe(
       () => {
         alert('Contact form submitted successfully!');
         // Reset the form fields

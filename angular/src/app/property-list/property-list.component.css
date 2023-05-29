@@ -54,22 +54,29 @@
 .contact-form.show {
   display: block; /* Show the contact form when the 'showContactForm' flag is set */
 }
-
-.property-filter {
-  margin-bottom: 20px;
-}
-
-.property-filter label {
-  margin-right: 10px;
-}
-
 .property-filter select,
-.property-filter input[type="number"] {
+.property-filter input[type="number"],
+.property-filter input[type="text"] {
   margin-right: 10px;
+  height: 30px; /* Set a fixed height for all input fields */
+}
+.property-filter button {
+  margin-right: 10px;
+}
+
+.property-filter input[type="number"] {
+  max-width: 100px; /* Limit the width of the number field */
+}
+
+.property-filter input[type="number"]::-webkit-inner-spin-button,
+.property-filter input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Remove the spinner arrows on number input */
+  margin: 0; /* Remove default margin */
 }
 
 .property-filter .apply-button {
   margin-left: 10px;
+  height: 30px; /* Set a fixed height for the apply button */
 }
 
 /* Adjust text size based on screen size */
@@ -83,4 +90,25 @@
   .property-card {
     width: 100%; /* Set the width to 100% for single item on a row */
   }
+}
+.property-filter select,
+.property-filter input[type="number"],
+.property-filter input[type="text"] {
+  margin-right: 10px;
+  height: 30px; /* Set a fixed height for all input fields */
+}
+
+.property-filter input[type="number"] {
+  max-width: 100px; /* Limit the width of the number field */
+}
+
+.property-filter input[type="number"]::-webkit-inner-spin-button,
+.property-filter input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Remove the spinner arrows on number input */
+  margin: 0; /* Remove default margin */
+}
+
+.property-filter .apply-button {
+  margin-left: 10px;
+  height: 30px; /* Set a fixed height for the apply button */
 }

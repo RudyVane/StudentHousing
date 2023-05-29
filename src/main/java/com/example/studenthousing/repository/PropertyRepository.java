@@ -10,17 +10,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
-    @Query("SELECT p FROM Property p ORDER BY p.id ASC")
+    @Query("SELECT p FROM Property p WHERE p.isRoomActive = 'true' ORDER BY p.id ASC")
     List<Property> findFirst10Properties(Pageable pageable);
 
     Optional<Property> findPropertyById(int id);
 
-    @Query("SELECT DISTINCT p.city FROM Property p ORDER BY p.city ASC ")
+    @Query("SELECT DISTINCT p.city FROM Property p WHERE p.isRoomActive = 'true' ORDER BY p.city ASC ")
     List<String> findAllDistinctCities();
 
-    @Query("SELECT p FROM Property p WHERE p.city = :city ORDER BY p.rent ASC ")
+    @Query("SELECT p FROM Property p WHERE p.city = :city AND p.isRoomActive = 'true' ORDER BY p.rent ASC ")
     Page<Property> findByCity(@Param("city") String city, Pageable pageable);
 
-    @Query("SELECT p FROM Property p WHERE p.id = :id")
+    @Query("SELECT p FROM Property p WHERE p.id = :id AND p.isRoomActive = 'true' ")
     Page<Property> findById(@Param("id") Integer id, Pageable pageable);
 }

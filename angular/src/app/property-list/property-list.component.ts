@@ -49,6 +49,7 @@ export class PropertyListComponent implements OnInit {
   id: number = 2;
   distinctCities: string[] = [];
   showFilterButtons: boolean = false;
+  topN: number = 10;
 
   currentPage = 1;
    constructor(
@@ -172,7 +173,7 @@ export class PropertyListComponent implements OnInit {
   }
 
 
-  filterRentDown(topN: number): void {
+  filterRentDown(): void {
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
       const apiUrl = 'http://localhost:8080/property';
       const params: any = {
@@ -188,7 +189,7 @@ export class PropertyListComponent implements OnInit {
         }),
         tap((data: Page<Property>) => {
           // Get the top N properties
-          this.properties.content = data.content.slice(0, topN);
+          this.properties.content = data.content.slice(0, this.topN);
         }),
         catchError((error) => {
           console.error('Error retrieving properties:', error);
@@ -198,7 +199,7 @@ export class PropertyListComponent implements OnInit {
     }
   }
 
-  filterRentUp(topN: number): void {
+  filterRentUp(): void {
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
       const apiUrl = 'http://localhost:8080/property';
       const params: any = {
@@ -214,7 +215,7 @@ export class PropertyListComponent implements OnInit {
         }),
         tap((data: Page<Property>) => {
           // Get the top N properties
-          this.properties.content = data.content.slice(0, topN);
+          this.properties.content = data.content.slice(0, this.topN);
         }),
         catchError((error) => {
           console.error('Error retrieving properties:', error);
@@ -223,7 +224,7 @@ export class PropertyListComponent implements OnInit {
       ).subscribe();
     }
   }
-  filterSqmUp(topN: number): void {
+  filterSqmUp(): void {
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
       const apiUrl = 'http://localhost:8080/property';
       const params: any = {
@@ -245,7 +246,7 @@ export class PropertyListComponent implements OnInit {
         }),
         tap((data: Page<Property>) => {
           // Get the top N properties
-          this.properties.content = data.content.slice(0, topN);
+          this.properties.content = data.content.slice(0, this.topN);
         }),
         catchError((error) => {
           console.error('Error retrieving properties:', error);
@@ -255,7 +256,7 @@ export class PropertyListComponent implements OnInit {
     }
   }
 
-  filterSqmDown(topN: number): void {
+  filterSqmDown(): void {
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
       const apiUrl = 'http://localhost:8080/property';
       const params: any = {
@@ -277,7 +278,7 @@ export class PropertyListComponent implements OnInit {
         }),
         tap((data: Page<Property>) => {
           // Get the top N properties
-          this.properties.content = data.content.slice(0, topN);
+          this.properties.content = data.content.slice(0, this.topN);
         }),
         catchError((error) => {
           console.error('Error retrieving properties:', error);

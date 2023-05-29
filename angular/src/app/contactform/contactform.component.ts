@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-contactform',
   template: `
+    <div class="form-container">
+
     <h2>Contact Form</h2>
     <form (submit)="submitForm()">
       <div>

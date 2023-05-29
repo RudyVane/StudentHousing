@@ -1,3 +1,9 @@
+.container {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
 .property-grid {
   display: flex;
   flex-wrap: wrap;
@@ -53,6 +59,8 @@
 
 .contact-form.show {
   display: block; /* Show the contact form when the 'showContactForm' flag is set */
+  width: 200%; /* Make the form occupy double the width */
+
 }
 .property-filter select,
 .property-filter input[type="number"],

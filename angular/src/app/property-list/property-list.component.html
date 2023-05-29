@@ -8,7 +8,8 @@
     <option value="All Cities">All Cities</option>
     <option *ngFor="let city of distinctCities" [value]="city">{{ city }}</option>
   </select>
-
+  <label for="minRent">Min Rent:</label>
+  <input type="number" id="minRent" name="minRent" [(ngModel)]="minRent">
   <label for="maxRent">Max Rent:</label>
   <input type="number" id="maxRent" name="maxRent" [(ngModel)]="maxRent">
 

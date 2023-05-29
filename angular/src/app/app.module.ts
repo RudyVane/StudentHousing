@@ -12,6 +12,7 @@ import { SearchComponent } from './search/search.component';
 import { CommonModule } from '@angular/common';
 import { ContactformComponent } from './contactform/contactform.component';
 import { FormsModule } from '@angular/forms';
+import { FindAdvertisementComponent } from './find-advertisement/find-advertisement.component';
 
 
 
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     PropertyListComponent,
     UserAdvertisementComponent,
     SearchComponent,
-    ContactformComponent
+    ContactformComponent,
+    FindAdvertisementComponent
     // PropertyDetailsComponent
 
   ],

@@ -44,7 +44,7 @@ export class PropertyListComponent implements OnInit {
   selectedProperty: Property | null = null;
   showContactForm: boolean = false; // Define the showContactForm property
   selectedCity: string = '';
-  maxRent: number = 1500;
+  maxRent: number = 0;
   selectedGender: string = '';
   id: number = 2;
   distinctCities: string[] = [];
@@ -52,6 +52,7 @@ export class PropertyListComponent implements OnInit {
   topN: number = 10;
 
   currentPage = 1;
+  minRent: number = 0;
    constructor(
     private http: HttpClient,
     private router: Router,
@@ -111,7 +112,7 @@ export class PropertyListComponent implements OnInit {
       (data: Page<Property>) => {
         console.log(data); // Log the API response
         this.properties = data;
-        this.properties.content = this.properties.content.slice(0, 100);
+        this.properties.content = this.properties.content.slice(0, 1000);
       },
       (error) => {
         console.error('Error retrieving properties:', error);
@@ -131,7 +132,9 @@ export class PropertyListComponent implements OnInit {
     if (this.maxRent) {
       params.maxRent = this.maxRent;
     }
-
+    if (this.minRent) {
+      params.minRent = this.minRent;
+    }
     if (this.selectedGender) {
       params.gender = this.selectedGender;
     }
@@ -149,7 +152,9 @@ export class PropertyListComponent implements OnInit {
           if (this.selectedCity && this.selectedCity !== 'All Cities' && property.city !== this.selectedCity) {
             meetsCriteria = false;
           }
-
+          if (this.minRent && property.rent < this.minRent) {
+            meetsCriteria = false;
+          }
           if (this.maxRent && property.rent > this.maxRent) {
             meetsCriteria = false;
           }
@@ -161,7 +166,7 @@ export class PropertyListComponent implements OnInit {
           return meetsCriteria;
         });
 
-        this.properties.content = this.properties.content.slice(0, 100);
+        this.properties.content = this.properties.content.slice(0, 1000);
 
         // Set the flag to show the filter buttons only after the "Apply Filters" button is clicked
         this.showFilterButtons = true;
@@ -176,13 +181,30 @@ export class PropertyListComponent implements OnInit {
   filterRentDown(): void {
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
       const apiUrl = 'http://localhost:8080/property';
-      const params: any = {
-        city: this.selectedCity
-      };
+      const params: any = {};
+
+      if (this.selectedCity && this.selectedCity !== 'All Cities') {
+        params.city = this.selectedCity;
+      }
+
+      if (this.maxRent) {
+        params.maxRent = this.maxRent;
+      }
+      if (this.minRent) {
+        params.minRent = this.minRent;
+      }
+      if (this.selectedGender) {
+        params.gender = this.selectedGender;
+      }
 
       // Make the API call with the updated URL and query parameters
       this.http.get<Page<Property>>(apiUrl, { params }).pipe(
         map((data: Page<Property>) => {
+          // Filter the properties based on rent within the specified range
+          data.content = data.content.filter(property => property.rent >= this.minRent && property.rent <= this.maxRent);
+          return data;
+        }),
+        tap((data: Page<Property>) => {
           // Sort the properties based on rent in descending order
           data.content.sort((a, b) => b.rent - a.rent);
           return data;
@@ -199,16 +221,34 @@ export class PropertyListComponent implements OnInit {
     }
   }
 
+
   filterRentUp(): void {
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
       const apiUrl = 'http://localhost:8080/property';
-      const params: any = {
-        city: this.selectedCity
-      };
+      const params: any = {};
+
+      if (this.selectedCity && this.selectedCity !== 'All Cities') {
+        params.city = this.selectedCity;
+      }
+
+      if (this.maxRent) {
+        params.maxRent = this.maxRent;
+      }
+      if (this.minRent) {
+        params.minRent = this.minRent;
+      }
+      if (this.selectedGender) {
+        params.gender = this.selectedGender;
+      }
 
       // Make the API call with the updated URL and query parameters
       this.http.get<Page<Property>>(apiUrl, { params }).pipe(
         map((data: Page<Property>) => {
+          // Filter the properties based on rent within the specified range
+          data.content = data.content.filter(property => property.rent >= this.minRent && property.rent <= this.maxRent);
+          return data;
+        }),
+        tap((data: Page<Property>) => {
           // Sort the properties based on rent in ascending order
           data.content.sort((a, b) => a.rent - b.rent);
           return data;
@@ -224,12 +264,25 @@ export class PropertyListComponent implements OnInit {
       ).subscribe();
     }
   }
+
   filterSqmUp(): void {
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
       const apiUrl = 'http://localhost:8080/property';
-      const params: any = {
-        city: this.selectedCity
-      };
+      const params: any = {};
+
+      if (this.selectedCity && this.selectedCity !== 'All Cities') {
+        params.city = this.selectedCity;
+      }
+
+      if (this.maxRent) {
+        params.maxRent = this.maxRent;
+      }
+      if (this.minRent) {
+        params.minRent = this.minRent;
+      }
+      if (this.selectedGender) {
+        params.gender = this.selectedGender;
+      }
 
       // Make the API call with the updated URL and query parameters
       this.http.get<Page<Property>>(apiUrl, { params }).pipe(
@@ -259,9 +312,21 @@ export class PropertyListComponent implements OnInit {
   filterSqmDown(): void {
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
       const apiUrl = 'http://localhost:8080/property';
-      const params: any = {
-        city: this.selectedCity
-      };
+      const params: any = {};
+
+      if (this.selectedCity && this.selectedCity !== 'All Cities') {
+        params.city = this.selectedCity;
+      }
+
+      if (this.maxRent) {
+        params.maxRent = this.maxRent;
+      }
+      if (this.minRent) {
+        params.minRent = this.minRent;
+      }
+      if (this.selectedGender) {
+        params.gender = this.selectedGender;
+      }
 
       // Make the API call with the updated URL and query parameters
       this.http.get<Page<Property>>(apiUrl, { params }).pipe(
@@ -287,5 +352,4 @@ export class PropertyListComponent implements OnInit {
       ).subscribe();
     }
   }
-
 }

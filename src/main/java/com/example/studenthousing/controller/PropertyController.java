@@ -5,7 +5,9 @@ import com.example.studenthousing.repository.PropertyRepository;
 import com.example.studenthousing.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
@@ -27,8 +29,10 @@ public class PropertyController {
     public PropertyController(PropertyService propertyService) {
         this.propertyService = propertyService;
     }
-    @GetMapping("/property")
-    public ResponseEntity<Page<Property>> getPropertyList(@RequestParam(required = false) String city) {
+    @GetMapping(value = "/property", produces = {MediaType.APPLICATION_JSON_VALUE, "text/csv"})
+    public ResponseEntity<?> getPropertyList(
+            @RequestParam(required = false) String city,
+            @RequestParam(defaultValue = "json") String format) {
         Page<Property> properties;
         if (city != null) {
             properties = propertyService.getPropertiesByCity(city);
@@ -36,19 +40,70 @@ public class PropertyController {
         } else {
             properties = propertyService.getProperties();
         }
-        return ResponseEntity.ok(properties);
+        HttpHeaders headers = new HttpHeaders();
+        if (format.equalsIgnoreCase("csv")) {
+            headers.setContentType(MediaType.parseMediaType("text/csv"));
+            String csvData = convertPropertiesToCSV(properties.getContent());
+            return new ResponseEntity<>(csvData, headers, HttpStatus.OK);
+        } else {
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            return new ResponseEntity<>(properties, headers, HttpStatus.OK);
+        }
     }
+
+    private String convertPropertiesToCSV(List<Property> properties) {
+        StringBuilder csvBuilder = new StringBuilder();
+        csvBuilder.append("id,external_id,area_sqm,city,cover_image_url,furnish,latitude,longitude,postal_code,property_type,raw_availability,rent,rent_detail,title,additional_costs,deposit,description_non_translated,description_translated,energy_label,gender,internet,is_room_active,kitchen,living,match_age,match_capacity,match_gender,match_languages,match_status,page_description,page_title,pets,registration_costs,roommates,shower,smoking_inside,toilet\n");
+        for (Property property : properties) {
+            csvBuilder.append(property.getId()).append(",")
+                    .append(property.getExternalId()).append(",")
+                    .append(property.getAreaSqm()).append(",")
+                    .append(property.getCity()).append(",")
+                    .append(property.getCoverImageUrl()).append(",")
+                    .append(property.getFurnish()).append(",")
+                    .append(property.getLatitude()).append(",")
+                    .append(property.getLongitude()).append(",")
+                    .append(property.getPostalCode()).append(",")
+                    .append(property.getPropertyType()).append(",")
+                    .append(property.getRawAvailability()).append(",")
+                    .append(property.getRent()).append(",")
+                    .append(property.getRentDetail()).append(",")
+                    .append(property.getTitle()).append(",")
+                    .append(property.getAdditionalCosts()).append(",")
+                    .append(property.getDeposit()).append(",")
+                    .append(property.getDescriptionNonTranslated()).append(",")
+                    .append(property.getDescriptionTranslated()).append(",")
+                    .append(property.getEnergyLabel()).append(",")
+                    .append(property.getGender()).append(",")
+                    .append(property.getInternet()).append(",")
+                    .append(property.getIsRoomActive()).append(",")
+                    .append(property.getKitchen()).append(",")
+                    .append(property.getLiving()).append(",")
+                    .append(property.getMatchAge()).append(",")
+                    .append(property.getMatchCapacity()).append(",")
+                    .append(property.getMatchGender()).append(",")
+                    .append(property.getMatchLanguages()).append(",")
+                    .append(property.getMatchStatus()).append(",")
+                    .append(property.getPageDescription()).append(",")
+                    .append(property.getPageTitle()).append(",")
+                    .append(property.getPets()).append(",")
+                    .append(property.getRegistrationCost()).append(",")
+                    .append(property.getRoommates()).append(",")
+                    .append(property.getShower()).append(",")
+                    .append(property.getSmokingInside()).append(",")
+                    .append(property.getToilet()).append("\n");
+        }
+        return csvBuilder.toString();
+    }
+
+
     @GetMapping("/property/distinct-cities")
     public ResponseEntity<List<String>> getDistinctCities() {
         List<String> cities = propertyService.getDistinctCities();
         return ResponseEntity.ok(cities);
     }
 
-   /* @GetMapping("/property/find-all-ids")
-    public ResponseEntity<List<Property>> findAllIds() {
-        List<Property> propertyIds = propertyService.findById();
-        return ResponseEntity.ok(propertyIds);
-    }*/
+
 
     @GetMapping("/property/{id}")
     public ResponseEntity<?> getPropertiesById(@PathVariable("id") int id) {

@@ -74,7 +74,7 @@ public class RegisterController {
         return new ResponseEntity<>(Map.of(
                 "username", newUser.getUsername(),
                 "email", newUser.getEmail(),
-                "id", newUser.getUser_id(),
+                "id", newUser.getId(),
                 "status", "Account created!"),
                 HttpStatus.OK);
     }

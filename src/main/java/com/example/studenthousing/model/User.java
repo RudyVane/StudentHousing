@@ -71,12 +71,15 @@ public class User implements UserDetails {
     @Column(name="pref_zipcode")
     private String prefZipcode;
 
+    @Column(name="ad_active")
+    private boolean adActive;
+
     public User(int user_id, String fullName, String username, String password, LocalDateTime registrationDate,
                 String photoURL, String email, String telephone, int age, String gender, String role,
                 String status, String language, int maxRent, String prefCity, String prefGender,
                 String prefKitchen, String prefShower, String prefToilet, String prefLiving, String prefInternet,
                 String prefEnergyLabel, String prefPets, String prefSmokingInside, String prefRoommates,
-                String prefDistanceToZipcode, String prefZipcode) {
+                String prefDistanceToZipcode, String prefZipcode, boolean adActive) {
         this.user_id = user_id;
         this.fullName = fullName;
         this.username = username;
@@ -104,6 +107,7 @@ public class User implements UserDetails {
         this.prefRoommates = prefRoommates;
         this.prefDistanceToZipcode = prefDistanceToZipcode;
         this.prefZipcode = prefZipcode;
+        this.adActive = adActive;
     }
 
     public User() {
@@ -355,5 +359,13 @@ public class User implements UserDetails {
 
     public void setPrefZipcode(String prefZipcode) {
         this.prefZipcode = prefZipcode;
+    }
+
+    public boolean isAdActive() {
+        return adActive;
+    }
+
+    public void setAdActive(boolean adActive) {
+        this.adActive = adActive;
     }
 }

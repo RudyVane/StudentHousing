@@ -13,9 +13,11 @@ public class AccountController {
     @GetMapping("/account")
     public Object getUser(@RequestParam(required = false) Integer id) {
         if (id != null) {
+            System.out.println("Returning user with id " + id);
             return userRepository.findById(id);
         } else {
             // Handle case when no parameter is provided
+            System.out.println("Returning standard user(78)");
             return userRepository.findById(78);
         }
     }

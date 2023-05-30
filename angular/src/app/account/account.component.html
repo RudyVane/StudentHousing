@@ -10,4 +10,12 @@
       <td>{{ user.email }}</td>
     </tr>
   </table>
+
+  <form #form="ngForm" (ngSubmit)="submitForm()">
+    <label for="numberInput">User ID:</label>
+    <input type="number" id="numberInput" [(ngModel)]="number" name="number" required>
+    <button class="btn btn-info" type="submit">Submit</button>
+  </form>
+
+
 </div>

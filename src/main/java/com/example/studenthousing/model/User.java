@@ -13,8 +13,9 @@ import java.util.Collection;
 public class User implements UserDetails {
 
     @Id
+    @Column(name="user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int user_id;
+    private int id;
     @Column(name="full_name")
     private String fullName;
     @Column(name="username", nullable = false, unique = true)
@@ -74,13 +75,13 @@ public class User implements UserDetails {
     @Column(name="ad_active")
     private boolean adActive;
 
-    public User(int user_id, String fullName, String username, String password, LocalDateTime registrationDate,
+    public User(int id, String fullName, String username, String password, LocalDateTime registrationDate,
                 String photoURL, String email, String telephone, int age, String gender, String role,
                 String status, String language, int maxRent, String prefCity, String prefGender,
                 String prefKitchen, String prefShower, String prefToilet, String prefLiving, String prefInternet,
                 String prefEnergyLabel, String prefPets, String prefSmokingInside, String prefRoommates,
                 String prefDistanceToZipcode, String prefZipcode, boolean adActive) {
-        this.user_id = user_id;
+        this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.password = password;
@@ -142,12 +143,12 @@ public class User implements UserDetails {
         return null;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getId() {
+        return id;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFullName() {

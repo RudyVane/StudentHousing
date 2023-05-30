@@ -54,8 +54,9 @@ public class UserService {
         userRepository.save(newUser);
 
         // Find a user by ID
-        Optional<User> result = userRepository.findById(1);
-        result.ifPresent(user -> System.out.println(user.getUsername()));
+        // This needs to be adapted: findById returns a User instead of a Optional
+//        Optional<User> result = userRepository.findById(1);
+//        result.ifPresent(user -> System.out.println(user.getUsername()));
 
         // Find a user by username
         User userByName = userRepository.findByUsername(randomUsername);

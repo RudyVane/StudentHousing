@@ -87,7 +87,7 @@ public class LoginController {
             log.info("User {} logged in", user.getUsername());
             rememberMeServices.loginSuccess(request, response, auth);
 
-            return new CurrentUser(user.getUser_id(), user.getUsername());
+            return new CurrentUser(user.getId(), user.getUsername());
         } catch (AppException a) {
             System.out.println(a.getMessage());
         }
@@ -101,7 +101,7 @@ public class LoginController {
 
     @GetMapping("/account")
     public CurrentUser getCurrentUser(@AuthenticationPrincipal User user) {
-        return new CurrentUser(user.getUser_id(), user.getUsername());
+        return new CurrentUser(user.getId(), user.getUsername());
     }
 
     @GetMapping("/csrf")

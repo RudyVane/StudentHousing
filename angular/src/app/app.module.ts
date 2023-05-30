@@ -9,6 +9,11 @@ import { RegisterComponent } from './register/register.component';
 import { PropertyListComponent } from './property-list/property-list.component';
 import { UserAdvertisementComponent } from './user-advertisement/user-advertisement.component';
 import { SearchComponent } from './search/search.component';
+import { TopnavComponent } from './topnav/topnav.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { AccountComponent } from './account/account.component';
+import { AlertComponent } from "./alert/alert.component";
 import { CommonModule } from '@angular/common';
 import { ContactformComponent } from './contactform/contactform.component';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +25,7 @@ import { FindAdvertisementComponent } from './find-advertisement/find-advertisem
 @NgModule({
   declarations: [
     AppComponent,
+    AlertComponent,
     FormComponent,
     RegisterComponent,
     PropertyListComponent,

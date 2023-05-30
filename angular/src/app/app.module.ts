@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +17,6 @@ import { AccountComponent } from './account/account.component';
 import { AlertComponent } from "./alert/alert.component";
 import { AdvertisementsComponent } from './advertisements/advertisements.component';
 import { ContactformComponent } from './contactform/contactform.component';
-import { FormsModule } from '@angular/forms';
 import { FindAdvertisementComponent } from './find-advertisement/find-advertisement.component';
 
 
@@ -46,8 +45,8 @@ import { FindAdvertisementComponent } from './find-advertisement/find-advertisem
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

@@ -70,7 +70,7 @@ public class RegisterController {
         }
 
         // Upon successful registering, show the newly registered user
-        System.out.println("New user created: " + newUser.getUsername());
+        System.out.println("New user created: " + newUser.getUsername() + "with ID " + newUser.getId());
         return new ResponseEntity<>(Map.of(
                 "username", newUser.getUsername(),
                 "email", newUser.getEmail(),

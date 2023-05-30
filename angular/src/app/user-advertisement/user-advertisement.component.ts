@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import { AlertService } from "../services/alert.service";
+import { AccountService } from "../services/account.service";
 
 @Component({
   selector: 'app-user-advertisement',
@@ -11,17 +13,18 @@ export class UserAdvertisementComponent {
   form!: FormGroup;
   formFields!: any[]; // Define the form fields array
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private accountService: AccountService,
+    private alertService: AlertService
+  ) {}
 
 
   ngOnInit() {
     this.formFields = [
       { label: 'Full Name:', id: 'fullName', name: 'fullName', required: true },
-      { label: 'Username:', id: 'username', name: 'username', required: true },
-      { label: 'Password:', id: 'password', name: 'password', required: true },
-      { label: 'Registration Date:', id: 'registrationDate', name: 'registrationDate', required: true },
       { label: 'Photo URL:', id: 'photoURL', name: 'photoURL', required: false },
-      { label: 'Email:', id: 'email', name: 'email', required: true },
       { label: 'Telephone:', id: 'telephone', name: 'telephone', required: true },
       { label: 'Age:', id: 'age', name: 'age', required: true },
       { label: 'Gender:', id: 'gender', name: 'gender', required: false },
@@ -46,11 +49,7 @@ export class UserAdvertisementComponent {
 
     this.form = this.formBuilder.group({
       fullName: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      registrationDate: ['', Validators.required],
       photoURL: [''],
-      email: ['', [Validators.required, Validators.email]],
       telephone: ['', Validators.required],
       age: ['', Validators.required],
       gender: [''],
@@ -77,14 +76,14 @@ export class UserAdvertisementComponent {
 
   submitForm() {
     if (this.form.valid) {
-      const formData = JSON.stringify(this.form.value);
-      this.http.post('http://localhost:8080/studenthousing/properties/user-advertisement', formData).subscribe(
+      this.http.post('/api/advertisements', this.form.value).subscribe(
         (response) => {
           console.log('Form submission successful:', response);
-          // Handle any success logic here
+          this.alertService.success("Your advertisement is now visible!")
         },
         (error) => {
           console.error('Form submission error:', error);
+          this.alertService.error("There was an error")
           // Handle any error logic here
         }
       );

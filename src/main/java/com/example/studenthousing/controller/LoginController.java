@@ -99,10 +99,10 @@ public class LoginController {
         return new LogoutResponse();
     }
 
-    @GetMapping("/account")
-    public CurrentUser getCurrentUser(@AuthenticationPrincipal User user) {
-        return new CurrentUser(user.getId(), user.getUsername());
-    }
+//    @GetMapping("/account")
+//    public CurrentUser getCurrentUser(@AuthenticationPrincipal User user) {
+//        return new CurrentUser(user.getId(), user.getUsername());
+//    }
 
     @GetMapping("/csrf")
     public CsrfResponse csrf(HttpServletRequest request) {

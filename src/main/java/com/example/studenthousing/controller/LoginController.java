@@ -36,7 +36,7 @@ public class LoginController {
     @NoArgsConstructor
     public class CurrentUser{
         Integer id;
-        String nickname;
+        String username;
     }
 
     @Data

@@ -31,6 +31,7 @@ export class AccountComponent implements OnInit {
   }
 
   getUser(): void {
+    this.alertService.clear();
     if (this.id === null) {
       this.http.get<User>('/api/account').subscribe(
         (response: User) => {
@@ -46,7 +47,12 @@ export class AccountComponent implements OnInit {
       const url = `/api/account?id=${this.number}`;
       this.http.get<User>(url).subscribe(
         (response) => {
-          this.setUser(response);
+          console.log(response);
+          if (response == null) {
+            this.alertService.error("This user does not exist")
+          } else {
+            this.setUser(response);
+          }
         },
         (error) => {
           console.error('Error fetching user:', error);

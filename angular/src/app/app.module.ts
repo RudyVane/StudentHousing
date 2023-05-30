@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
@@ -14,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { AlertComponent } from "./alert/alert.component";
+import { AdvertisementsComponent } from './advertisements/advertisements.component';
 
 @NgModule({
   declarations: [
@@ -27,10 +29,12 @@ import { AlertComponent } from "./alert/alert.component";
     TopnavComponent,
     HomeComponent,
     LoginComponent,
-    AccountComponent
+    AccountComponent,
+    AdvertisementsComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule

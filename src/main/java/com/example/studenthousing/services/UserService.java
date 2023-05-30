@@ -35,6 +35,9 @@ public class UserService {
         return userRepository.save(u);
     }
 
+    public List<User> findByAdActiveTrue() {
+        return userRepository.findByAdActiveTrue();
+    }
 
     public void test() {
         // Save a new user

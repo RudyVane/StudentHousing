@@ -1,21 +1,30 @@
 <div class="content">
+<!-- Form to input another User ID -->
+    <form class="mb-3 form-container" #form="ngForm" (ngSubmit)="submitForm()">
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label class="col-form-label" for="numberInput">User ID:</label>
+        </div>
+        <div class="col-auto">
+          <input class="form-control" type="number" id="numberInput" [(ngModel)]="number" name="number" required>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-info" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+<!-- Table that shows your selected account details -->
   <h1>Your account</h1>
   <table class="table">
     <tr>
       <td>Username</td>
       <td>Email</td>
+      <td>ID</td>
     </tr>
     <tr>
       <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
+      <td>{{ user.id }}</td>
     </tr>
   </table>
-
-  <form #form="ngForm" (ngSubmit)="submitForm()">
-    <label for="numberInput">User ID:</label>
-    <input type="number" id="numberInput" [(ngModel)]="number" name="number" required>
-    <button class="btn btn-info" type="submit">Submit</button>
-  </form>
-
-
 </div>

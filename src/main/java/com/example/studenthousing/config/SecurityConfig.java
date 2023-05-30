@@ -49,7 +49,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                         .antMatchers("/login").permitAll()
                         .antMatchers("/register").permitAll()
                         .antMatchers("/property").permitAll()
-                        .antMatchers("/account").authenticated()
+                        .antMatchers("/account").permitAll()
                         .antMatchers("/advertisements").permitAll()
                         .anyRequest().denyAll())
                 .exceptionHandling(customizer -> customizer

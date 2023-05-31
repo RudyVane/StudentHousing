@@ -1,0 +1,19 @@
+.form-container {
+  width: 200%; /* Adjust the width as needed */
+}
+
+.form-container form {
+  width: 50%; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the form horizontally */
+}
+
+.form-container label,
+.form-container input,
+.form-container textarea {
+  width: 100%; /* Make the form fields occupy the full width of the form */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+.form-container button[type="submit"] {
+  width: auto; /* Allow the submit button to adjust its width based on content */
+}

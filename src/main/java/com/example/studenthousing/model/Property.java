@@ -1,5 +1,7 @@
 package com.example.studenthousing.model;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 
 @Entity
@@ -84,6 +86,17 @@ public class Property {
     private String smokingInside;
     @Column(name="toilet")
     private String toilet;
+    @Formula("rent/area_sqm")
+    private Float rentSqm;
+    public float getRentSqm() {
+        return rentSqm;
+    }
+
+    public void setRentSqm(Float rentSqm) {
+        this.rentSqm = rentSqm;
+    }
+
+
     public Property() {
     }
     public int getId() {
@@ -391,7 +404,45 @@ public class Property {
 
     @Override
     public String toString() {
-        return "Property [id=" + id + ", external_id=" + externalId + "]";
+        return "Property{" +
+                "id=" + id +
+                ", externalId='" + externalId + '\'' +
+                ", areaSqm=" + areaSqm +
+                ", city='" + city + '\'' +
+                ", coverImageUrl='" + coverImageUrl + '\'' +
+                ", furnish='" + furnish + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", propertyType='" + propertyType + '\'' +
+                ", rawAvailability='" + rawAvailability + '\'' +
+                ", rent=" + rent +
+                ", rentDetail='" + rentDetail + '\'' +
+                ", title='" + title + '\'' +
+                ", additionalCosts=" + additionalCosts +
+                ", deposit=" + deposit +
+                ", descriptionNonTranslated='" + descriptionNonTranslated + '\'' +
+                ", descriptionTranslated='" + descriptionTranslated + '\'' +
+                ", energyLabel='" + energyLabel + '\'' +
+                ", gender='" + gender + '\'' +
+                ", internet='" + internet + '\'' +
+                ", isRoomActive='" + isRoomActive + '\'' +
+                ", kitchen='" + kitchen + '\'' +
+                ", living='" + living + '\'' +
+                ", matchAge='" + matchAge + '\'' +
+                ", matchCapacity='" + matchCapacity + '\'' +
+                ", matchGender='" + matchGender + '\'' +
+                ", matchLanguages='" + matchLanguages + '\'' +
+                ", matchStatus='" + matchStatus + '\'' +
+                ", pageDescription='" + pageDescription + '\'' +
+                ", pageTitle='" + pageTitle + '\'' +
+                ", pets='" + pets + '\'' +
+                ", registrationCost=" + registrationCost +
+                ", roommates='" + roommates + '\'' +
+                ", shower='" + shower + '\'' +
+                ", smokingInside='" + smokingInside + '\'' +
+                ", toilet='" + toilet + '\'' +
+                '}';
     }
 
 

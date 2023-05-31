@@ -16,14 +16,6 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/")
 public class RegisterController {
-
-    @Autowired
-    private Environment env;
-
-    private String getSQLPass() {
-        return env.getProperty("SQLPass");
-    }
-
     @Autowired
     private UserRepository userRepository;
     @Autowired

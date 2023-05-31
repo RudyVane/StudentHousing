@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -24,6 +25,20 @@ public class PropertyService {
         // Create the EntityManagerFactory
         entityManagerFactory = Persistence.createEntityManagerFactory("StudentHousing");
     }
+    public Page<Property> getProperties(Pageable pageable) {
+        return propertyRepository.findAll(pageable);
+    }
+
+    public Page<Property> getPropertiesByRentRange(Integer minRent, Integer maxRent, Pageable pageable) {
+        return propertyRepository.findByRentBetween(minRent, maxRent, pageable);
+    }
+    public Page<Property> getPropertiesByCityAndRentRange(String city, Integer minRent, Integer maxRent, Pageable pageable) {
+        return propertyRepository.findByCityAndRentBetween(city, minRent, maxRent, pageable);
+    }
+
+
+
+
 
     public Property newProperty(int id, String externalId, int areaSqm, String city, String coverImageUrl, String furnish, String latitude, String longitude, String postalCode, String propertyType, String rawAvailability, int rent, String rentDetail, String title, int additionalCosts, int deposit, String descriptionNonTranslated, String descriptionTranslated, String energyLabel, String gender, String internet, String isRoomActive, String kitchen, String living, String matchAge, String matchCapacity, String matchGender, String matchLanguages, String matchStatus, String pageDescription, String pageTitle, String pets, int registrationCost, String roommates, String shower, String smokingInside, String toilet) {
         Property p = new Property();
@@ -67,10 +82,14 @@ public class PropertyService {
 
         return propertyRepository.save(p);
     }
-    public Page<Property> getProperties() {
-        Pageable pageable = PageRequest.of(0, 1000);
+    public Page<Property> getAllProperties(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
         return propertyRepository.findAll(pageable);
     }
+    public Page<Property> getAllProperties(Pageable pageable) {
+        return propertyRepository.findAll(pageable);
+    }
+
 
     public Optional<Property> getPropertyById(int propertyId) {
         return propertyRepository.findById(propertyId);
@@ -78,10 +97,10 @@ public class PropertyService {
     public List<String> getDistinctCities() {
         return propertyRepository.findAllDistinctCities();
     }
-    public Page<Property> getPropertiesByCity(String city) {
-        Pageable pageable = PageRequest.of(0, 1000);
-        return propertyRepository.findByCity(city,pageable);
+    public Page<Property> getPropertiesByCity(String city, Pageable pageable) {
+        return propertyRepository.findByCity(city, pageable);
     }
+
     public Page<Property> getPropertiesById(int id) {
         Pageable pageable = PageRequest.of(0, 1000);
         return propertyRepository.findById(id,pageable);

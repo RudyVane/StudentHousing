@@ -43,23 +43,23 @@ export class PropertyListComponent implements OnInit {
   fallbackImageUrl = 'assets/No-image-available.jpg';
   selectedProperty: Property | null = null;
   showContactForm: boolean = false; // Define the showContactForm property
-  selectedCity: string = '';
-  maxRent: number = 0;
+  selectedCity: string = 'All Cities';
+  maxRent: number = 10000;
+  minRent: number = 0;
   selectedGender: string = '';
   id: number = 2;
   distinctCities: string[] = [];
   showFilterButtons: boolean = false;
   topN: number = 10;
-
   currentPage = 1;
-  minRent: number = 0;
-   constructor(
+  sortBy: String = "rent";
+  sortDirection: String = "asc";
+  constructor(
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private propertyService: PropertyService
-
-) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -85,6 +85,31 @@ export class PropertyListComponent implements OnInit {
     this.showContactForm = true;
   }
 
+  nextPage(): void {
+    if (this.properties.last) {
+      // If it's the last page, do nothing
+      return;
+    }
+
+
+
+    // Increment the current page number
+    this.currentPage++;
+
+
+    this.getProperties().subscribe(
+      (data: Page<Property>) => {
+        console.log(data); // Log the API response
+        this.properties = data;
+        this.properties.content = this.properties.content.slice(0, 1000);
+      },
+      (error) => {
+        console.error('Error retrieving properties:', error);
+      }
+    );
+  }
+
+
   getDistinctCities(): void {
     this.propertyService.findAllDistinctCities().subscribe(
       (data: { cities: string[] }) => {
@@ -99,123 +124,86 @@ export class PropertyListComponent implements OnInit {
     );
 
   }
-  applyInit(): void {
-    console.log('Apply Filters clicked');
-    const apiUrl = 'http://localhost:8080/property';
-    const params: any = {};
 
-    if (this.selectedCity && this.selectedCity !== 'All Cities') {
-      params.city = this.selectedCity;
-    }
+  applyInit(): void {
+
+    // Reset the filter values
+    this.selectedCity = '';
+    this.minRent = 0;
+    this.maxRent = 10000;
+    this.selectedGender = '';
+    this.currentPage = 1;
+    this.sortBy = 'rent';
+    this.sortDirection = 'asc';
+
     // Make the API call with the updated URL and query parameters
-    this.http.get<Page<Property>>(apiUrl, { params }).subscribe(
+    this.getProperties().subscribe(
       (data: Page<Property>) => {
         console.log(data); // Log the API response
         this.properties = data;
-        this.properties.content = this.properties.content.slice(0, 1000);
       },
       (error) => {
         console.error('Error retrieving properties:', error);
       }
     );
   }
+
 
   applyFilters(): void {
-    console.log('Apply Filters clicked');
-    const apiUrl = 'http://localhost:8080/property';
-    const params: any = {};
+    if (this.selectedCity === 'All Cities') {
+      // Retrieve all properties without filtering by city
+      this.getProperties().subscribe(
+        (data: Page<Property>) => {
+          console.log(data); // Log the API response
+          this.properties = data;
+          // Set the flag to show the filter buttons only after the "Apply Filters" button is clicked
+          this.showFilterButtons = true;
+          // Display only the top N properties
+          this.properties.content = this.properties.content.slice(0, this.topN);
+        },
+        (error) => {
+          console.error('Error retrieving properties:', error);
+        }
+      );
+    } else {
+      // Apply the regular filtering logic
+      this.currentPage = 0;
 
-    if (this.selectedCity && this.selectedCity !== 'All Cities') {
-      params.city = this.selectedCity;
-    }
-
-    if (this.maxRent) {
-      params.maxRent = this.maxRent;
-    }
-    if (this.minRent) {
-      params.minRent = this.minRent;
-    }
-    if (this.selectedGender) {
-      params.gender = this.selectedGender;
-    }
-
-    // Make the API call with the updated URL and query parameters
-    this.http.get<Page<Property>>(apiUrl, { params }).subscribe(
-      (data: Page<Property>) => {
-        console.log(data); // Log the API response
-        this.properties = data;
-
-        // Filter the properties based on the selected criteria
-        this.properties.content = this.properties.content.filter(property => {
-          let meetsCriteria = true;
-
-          if (this.selectedCity && this.selectedCity !== 'All Cities' && property.city !== this.selectedCity) {
-            meetsCriteria = false;
-          }
-          if (this.minRent && property.rent < this.minRent) {
-            meetsCriteria = false;
-          }
-          if (this.maxRent && property.rent > this.maxRent) {
-            meetsCriteria = false;
-          }
-
-          if (this.selectedGender && property.gender !== this.selectedGender) {
-            meetsCriteria = false;
-          }
-
-          return meetsCriteria;
-        });
-
-        this.properties.content = this.properties.content.slice(0, 1000);
-
-        // Set the flag to show the filter buttons only after the "Apply Filters" button is clicked
-        this.showFilterButtons = true;
-      },
-      (error) => {
-        console.error('Error retrieving properties:', error);
-      }
-    );
-  }
-
-
-  filterRentDown(): void {
-    if (this.selectedCity && this.selectedCity !== 'All Cities') {
-      const apiUrl = 'http://localhost:8080/property';
-      const params: any = {};
-
-      if (this.selectedCity && this.selectedCity !== 'All Cities') {
-        params.city = this.selectedCity;
-      }
-
-      if (this.maxRent) {
-        params.maxRent = this.maxRent;
-      }
-      if (this.minRent) {
-        params.minRent = this.minRent;
-      }
-      if (this.selectedGender) {
-        params.gender = this.selectedGender;
-      }
-
-      // Make the API call with the updated URL and query parameters
-      this.http.get<Page<Property>>(apiUrl, { params }).pipe(
+      this.getProperties().pipe(
         map((data: Page<Property>) => {
-          // Filter the properties based on rent within the specified range
-          data.content = data.content.filter(property => property.rent >= this.minRent && property.rent <= this.maxRent);
-          return data;
+          // Filter the properties based on the selected criteria
+          return data.content.filter(property => {
+            let meetsCriteria = true;
+
+            if (property.city !== this.selectedCity) {
+              meetsCriteria = false;
+            }
+            if (this.minRent && property.rent < this.minRent) {
+              meetsCriteria = false;
+            }
+            if (this.maxRent && property.rent > this.maxRent) {
+              meetsCriteria = false;
+            }
+            if (this.selectedGender && property.gender !== this.selectedGender) {
+              meetsCriteria = false;
+            }
+
+            return meetsCriteria;
+          });
         }),
-        tap((data: Page<Property>) => {
-          // Sort the properties based on rent in descending order
-          data.content.sort((a, b) => b.rent - a.rent);
-          return data;
-        }),
-        tap((data: Page<Property>) => {
-          // Get the top N properties
-          this.properties.content = data.content.slice(0, this.topN);
+        tap((filteredProperties: Property[]) => {
+          console.log(filteredProperties); // Log the filtered properties
+
+          // Set the filtered properties to the component's properties
+          this.properties.content = filteredProperties;
+          // Set the flag to show the filter buttons only after the "Apply Filters" button is clicked
+          this.showFilterButtons = true;
+          // Display only the top N properties
+          this.properties.content = this.properties.content.slice(0, this.topN);
         }),
         catchError((error) => {
           console.error('Error retrieving properties:', error);
-          return of(null);
+          return [];
         })
       ).subscribe();
     }
@@ -223,133 +211,118 @@ export class PropertyListComponent implements OnInit {
 
 
   filterRentUp(): void {
-    if (this.selectedCity && this.selectedCity !== 'All Cities') {
-      const apiUrl = 'http://localhost:8080/property';
-      const params: any = {};
+    this.sortBy = "rent";
+    this.sortDirection = "asc";
+    this.getProperties().pipe(
+      map((data: Page<Property>) => {
+        // Get all properties within the rent range
+        this.properties.content = data.content;
 
-      if (this.selectedCity && this.selectedCity !== 'All Cities') {
-        params.city = this.selectedCity;
-      }
+        // Set the flag to show the filter buttons only after the "Apply Filters" button is clicked
+        this.showFilterButtons = true;
+      }),
+      catchError((error) => {
+        console.error('Error retrieving properties:', error);
+        return [];
+      })
+    ).subscribe();
+  }
 
-      if (this.maxRent) {
-        params.maxRent = this.maxRent;
-      }
-      if (this.minRent) {
-        params.minRent = this.minRent;
-      }
-      if (this.selectedGender) {
-        params.gender = this.selectedGender;
-      }
 
-      // Make the API call with the updated URL and query parameters
-      this.http.get<Page<Property>>(apiUrl, { params }).pipe(
-        map((data: Page<Property>) => {
-          // Filter the properties based on rent within the specified range
-          data.content = data.content.filter(property => property.rent >= this.minRent && property.rent <= this.maxRent);
-          return data;
-        }),
-        tap((data: Page<Property>) => {
-          // Sort the properties based on rent in ascending order
-          data.content.sort((a, b) => a.rent - b.rent);
-          return data;
-        }),
-        tap((data: Page<Property>) => {
-          // Get the top N properties
-          this.properties.content = data.content.slice(0, this.topN);
-        }),
-        catchError((error) => {
-          console.error('Error retrieving properties:', error);
-          return of(null);
-        })
-      ).subscribe();
-    }
+  filterRentDown(): void {
+
+  this.sortBy = "rent";
+  this.sortDirection = "desc";
+
+    this.getProperties().pipe(
+
+      map((data: Page<Property>) => {
+        // Get all properties within the rent range
+        this.properties.content = data.content;
+
+        // Set the flag to show the filter buttons only after the "Apply Filters" button is clicked
+        this.showFilterButtons = true;
+      }),
+      catchError((error) => {
+        console.error('Error retrieving properties:', error);
+        return [];
+      })
+    ).subscribe();
   }
 
   filterSqmUp(): void {
-    if (this.selectedCity && this.selectedCity !== 'All Cities') {
-      const apiUrl = 'http://localhost:8080/property';
-      const params: any = {};
+    this.sortBy = "rentSqm";
+    this.sortDirection = "asc";
 
-      if (this.selectedCity && this.selectedCity !== 'All Cities') {
-        params.city = this.selectedCity;
-      }
+    this.getProperties().pipe(
 
-      if (this.maxRent) {
-        params.maxRent = this.maxRent;
-      }
-      if (this.minRent) {
-        params.minRent = this.minRent;
-      }
-      if (this.selectedGender) {
-        params.gender = this.selectedGender;
-      }
+      map((data: Page<Property>) => {
+        // Get all properties within the rent range
+        this.properties.content = data.content;
 
-      // Make the API call with the updated URL and query parameters
-      this.http.get<Page<Property>>(apiUrl, { params }).pipe(
-        map((data: Page<Property>) => {
-          // Calculate rent per sqm for each property
-          data.content.forEach(property => {
-            property.rentPerSqm = property.rent / property.areaSqm;
-          });
-
-          // Sort the properties based on rent per sqm in ascending order
-          data.content.sort((a, b) => a.rentPerSqm - b.rentPerSqm);
-
-          return data;
-        }),
-        tap((data: Page<Property>) => {
-          // Get the top N properties
-          this.properties.content = data.content.slice(0, this.topN);
-        }),
-        catchError((error) => {
-          console.error('Error retrieving properties:', error);
-          return of(null);
-        })
-      ).subscribe();
-    }
+        // Set the flag to show the filter buttons only after the "Apply Filters" button is clicked
+        this.showFilterButtons = true;
+      }),
+      catchError((error) => {
+        console.error('Error retrieving properties:', error);
+        return [];
+      })
+    ).subscribe();
   }
-
   filterSqmDown(): void {
+    this.sortBy = "rentSqm";
+    this.sortDirection = "desc";
+
+
+    this.getProperties().pipe(
+
+      map((data: Page<Property>) => {
+        // Get all properties within the rent range
+        this.properties.content = data.content;
+
+        // Set the flag to show the filter buttons only after the "Apply Filters" button is clicked
+        this.showFilterButtons = true;
+      }),
+      catchError((error) => {
+        console.error('Error retrieving properties:', error);
+        return [];
+      })
+    ).subscribe();
+  }
+  private getProperties(): Observable<Page<Property>> {
+    let params: any = {
+      sortBy: this.sortBy,
+      sortDirection: this.sortDirection,
+      page: this.currentPage,
+      gender: this.selectedGender,
+      minRent: this.minRent,
+      maxRent: this.maxRent
+    };
+
     if (this.selectedCity && this.selectedCity !== 'All Cities') {
-      const apiUrl = 'http://localhost:8080/property';
-      const params: any = {};
-
-      if (this.selectedCity && this.selectedCity !== 'All Cities') {
-        params.city = this.selectedCity;
-      }
-
-      if (this.maxRent) {
-        params.maxRent = this.maxRent;
-      }
-      if (this.minRent) {
-        params.minRent = this.minRent;
-      }
-      if (this.selectedGender) {
-        params.gender = this.selectedGender;
-      }
-
-      // Make the API call with the updated URL and query parameters
-      this.http.get<Page<Property>>(apiUrl, { params }).pipe(
-        map((data: Page<Property>) => {
-          // Calculate rent per sqm for each property
-          data.content.forEach(property => {
-            property.rentPerSqm = property.rent / property.areaSqm;
-          });
-
-          // Sort the properties based on rent per sqm in descending order
-          data.content.sort((a, b) => b.rentPerSqm - a.rentPerSqm);
-
-          return data;
-        }),
-        tap((data: Page<Property>) => {
-          // Get the top N properties
-          this.properties.content = data.content.slice(0, this.topN);
-        }),
-        catchError((error) => {
-          console.error('Error retrieving properties:', error);
-          return of(null);
-        })
-      ).subscribe();
+      params.city = this.selectedCity;
     }
+
+    return this.http.get<Page<Property>>(this.apiUrl, { params }).pipe(
+      tap((data: Page<Property>) => {
+        console.log(data); // Log the API response
+        this.properties = data;
+      }),
+      catchError((error) => {
+        console.error('Error retrieving properties:', error);
+        return of({
+          content: [],
+          totalPages: 0,
+          totalElements: 0,
+          number: 0,
+          size: 0,
+          first: false,
+          last: false,
+          numberOfElements: 0,
+          empty: false,
+          properties: []
+        });
+      })
+    );
   }
 }

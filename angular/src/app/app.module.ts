@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { ReactiveFormsModule} from '@angular/forms';
+import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
@@ -28,7 +28,6 @@ import { FindAdvertisementComponent } from './find-advertisement/find-advertisem
     ContactformComponent,
     FindAdvertisementComponent
     // PropertyDetailsComponent
-
   ],
   imports: [
     BrowserModule,

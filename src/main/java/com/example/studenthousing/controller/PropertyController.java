@@ -4,7 +4,7 @@ import com.example.studenthousing.model.Property;
 import com.example.studenthousing.repository.PropertyRepository;
 import com.example.studenthousing.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,27 +29,46 @@ public class PropertyController {
     public PropertyController(PropertyService propertyService) {
         this.propertyService = propertyService;
     }
-    @GetMapping(value = "/property", produces = {MediaType.APPLICATION_JSON_VALUE, "text/csv"})
+    @GetMapping(value = "/property", produces = { MediaType.APPLICATION_JSON_VALUE, "text/csv" })
     public ResponseEntity<?> getPropertyList(
             @RequestParam(required = false) String city,
-            @RequestParam(defaultValue = "json") String format) {
-        Page<Property> properties;
-        if (city != null) {
-            properties = propertyService.getPropertiesByCity(city);
+            @RequestParam(defaultValue = "json") String format,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "rent") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection,
+            @RequestParam(required = false) Integer minRent,
+            @RequestParam(required = false) Integer maxRent) {
 
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        Page<Property> properties;
+
+        if (minRent != null && maxRent != null) {
+            if (city != null) {
+                properties = propertyService.getPropertiesByCityAndRentRange(city, minRent, maxRent, pageable);
+            } else {
+                properties = propertyService.getPropertiesByRentRange(minRent, maxRent, pageable);
+            }
+        } else if (city != null) {
+            properties = propertyService.getPropertiesByCity(city, pageable);
         } else {
-            properties = propertyService.getProperties();
+            properties = propertyService.getAllProperties(pageable);
         }
-        HttpHeaders headers = new HttpHeaders();
+
         if (format.equalsIgnoreCase("csv")) {
-            headers.setContentType(MediaType.parseMediaType("text/csv"));
             String csvData = convertPropertiesToCSV(properties.getContent());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_PLAIN);
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=properties.csv");
             return new ResponseEntity<>(csvData, headers, HttpStatus.OK);
         } else {
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            return new ResponseEntity<>(properties, headers, HttpStatus.OK);
+            return new ResponseEntity<>(properties, HttpStatus.OK);
         }
     }
+
 
     private String convertPropertiesToCSV(List<Property> properties) {
         StringBuilder csvBuilder = new StringBuilder();

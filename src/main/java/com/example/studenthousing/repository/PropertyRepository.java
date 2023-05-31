@@ -18,9 +18,13 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
     @Query("SELECT DISTINCT p.city FROM Property p WHERE p.isRoomActive = 'true' ORDER BY p.city ASC ")
     List<String> findAllDistinctCities();
 
-    @Query("SELECT p FROM Property p WHERE p.city = :city AND p.isRoomActive = 'true' ORDER BY p.rent ASC ")
+//    @Query("SELECT p FROM Property p WHERE p.city = :city AND p.isRoomActive = 'true' ORDER BY p.rent ASC ")
     Page<Property> findByCity(@Param("city") String city, Pageable pageable);
 
     @Query("SELECT p FROM Property p WHERE p.id = :id AND p.isRoomActive = 'true' ")
     Page<Property> findById(@Param("id") Integer id, Pageable pageable);
+
+    Page<Property> findByRentBetween(int minRent, int maxRent, Pageable pageable);
+    Page<Property> findByCityAndRentBetween(String city, int minRent, int maxRent, Pageable pageable);
+
 }

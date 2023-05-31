@@ -23,6 +23,7 @@
 
   <!-- Move the filter buttons inside the ngIf condition -->
   <button (click)="applyFilters()">Apply Filters</button>
+  <button (click)="nextPage()">nextPage</button>
   <br><br>
   <div *ngIf="showFilterButtons && selectedCity !== 'All Cities'">
     <!-- Display the filter buttons only when the "Apply Filters" button is clicked and the selected city is not "All Cities" -->

@@ -1,5 +1,7 @@
 package com.example.studenthousing.model;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 
 @Entity
@@ -84,6 +86,17 @@ public class Property {
     private String smokingInside;
     @Column(name="toilet")
     private String toilet;
+    @Formula("rent/area_sqm")
+    private Float rentSqm;
+    public float getRentSqm() {
+        return rentSqm;
+    }
+
+    public void setRentSqm(Float rentSqm) {
+        this.rentSqm = rentSqm;
+    }
+
+
     public Property() {
     }
     public int getId() {

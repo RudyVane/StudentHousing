@@ -35,7 +35,7 @@ import { FindAdvertisementComponent } from './find-advertisement/find-advertisem
     HomeComponent,
     LoginComponent,
     AccountComponent,
-    AdvertisementsComponent
+    AdvertisementsComponent,
     ContactformComponent,
     FindAdvertisementComponent
     // PropertyDetailsComponent

@@ -1,14 +1,20 @@
 <div class="content">
-  <h1>Users</h1>
-  <table class="table">
+  <h1>Advertisements</h1>
+  <table class="table" *ngIf="!isLoading">
     <tr>
       <th>Username</th>
       <th>Email</th>
+      <th>Message</th>
     </tr>
     <tr *ngFor="let user of users">
       <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
+      <td>{{ user.adMessage }}</td>
     </tr>
   </table>
+
+  <div *ngIf="isLoading">
+    Loading...
+  </div>
 
 </div>

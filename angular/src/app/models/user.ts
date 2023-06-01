@@ -28,6 +28,7 @@ export class User {
   prefDistanceToZipcode?: string = '';
   prefZipcode?: string = '';
   adActive?: boolean = false;
+  adMessage?: string = '';
 
   constructor(id: number, username: string, email: string, password: string);
 
@@ -59,7 +60,8 @@ export class User {
     prefRoommates?: string,
     prefDistanceToZipcode?: string,
     prefZipcode?: string,
-    adActive?: boolean
+    adActive?: boolean,
+    adMessage?: string
   ) {
     this.id = id;
     this.username = username;
@@ -89,5 +91,6 @@ export class User {
     this.prefDistanceToZipcode = prefDistanceToZipcode;
     this.prefZipcode = prefZipcode;
     this.adActive = adActive;
+    this.adMessage = adMessage;
   }
 }

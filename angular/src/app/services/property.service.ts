@@ -9,7 +9,7 @@ import { Pageable } from '../models/pageable';
   providedIn: 'root'
 })
 export class PropertyService {
-  private apiUrl = 'http://localhost:8080/property';
+  private apiUrl = 'http://localhost:8080/properties';
   private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
@@ -18,7 +18,7 @@ export class PropertyService {
     return this.http.post<Property>(`${this.apiUrl}/newProperty`, property);
   }
   findAllDistinctCities(): Observable<{ cities: string[] }> {
-    return this.http.get<{ cities: string[] }>('http://localhost:8080/property/distinct-cities');
+    return this.http.get<{ cities: string[] }>('http://localhost:8080/properties/distinct-cities');
   }
 
   getProperties(page: number, pageSize: number): Observable<Page<Property>> {

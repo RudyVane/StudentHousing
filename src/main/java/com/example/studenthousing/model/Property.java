@@ -21,7 +21,6 @@ public class Property {
     @Column(name="cover_image_url")
     private String coverImageUrl;
     @Column(name="furnish")
-
     private String furnish;
     @Column(name="latitude")
     private String latitude;
@@ -46,7 +45,6 @@ public class Property {
     @Column(name="description_non_translated")
     private String descriptionNonTranslated;
     @Column(name="description_translated")
-
     private String descriptionTranslated;
     @Column(name="energy_label")
     private String energyLabel;
@@ -86,21 +84,26 @@ public class Property {
     private String smokingInside;
     @Column(name="toilet")
     private String toilet;
-//    @Formula("rent/area_sqm")
-//    private Float rentSqm;
-//    public float getRentSqm() {
-//        return rentSqm;
-//    }
+    @Formula("rent/area_sqm")
+    private Float rentSqm;
+    public float getRentSqm() {
+        if (areaSqm != 0) {
+            rentSqm = (float) rent / (float) areaSqm;
+            return rentSqm;
+        } else {
+            return 0;
+        }
+    }
 
 //    public void setRentSqm(Float rentSqm) {
 //        this.rentSqm = rentSqm;
 //    }
 
-//    private void calculateRentSqm() {
-//        if (areaSqm != 0) {
-//            rentSqm = (float) rent / (float) areaSqm;
-//        }
-//    }
+    private void calculateRentSqm() {
+        if (areaSqm != 0) {
+            rentSqm = (float) rent / (float) areaSqm;
+        }
+    }
 
     public Property() {
     }
@@ -133,7 +136,7 @@ public class Property {
 
     public void setAreaSqm(int areaSqm) {
         this.areaSqm = areaSqm;
-        // calculateRentSqm();
+        calculateRentSqm();
     }
 
     public String getCity() {
@@ -206,7 +209,7 @@ public class Property {
 
     public void setRent(int rent) {
         this.rent = rent;
-        // calculateRentSqm();
+        calculateRentSqm();
     }
 
     public String getRentDetail() {

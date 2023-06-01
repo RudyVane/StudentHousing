@@ -71,9 +71,10 @@ public class User implements UserDetails {
     private String prefDistanceToZipcode;
     @Column(name="pref_zipcode")
     private String prefZipcode;
-
     @Column(name="ad_active")
     private boolean adActive;
+    @Column(name="ad_message")
+    private String message;
 
     public User(int id, String fullName, String username, String password, LocalDateTime registrationDate,
                 String photoURL, String email, String telephone, int age, String gender, String role,
@@ -368,5 +369,13 @@ public class User implements UserDetails {
 
     public void setAdActive(boolean adActive) {
         this.adActive = adActive;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

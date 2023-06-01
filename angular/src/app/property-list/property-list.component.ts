@@ -26,7 +26,7 @@ export interface Page<T> {
   styleUrls: ['./property-list.component.css']
 })
 export class PropertyListComponent implements OnInit {
-  apiUrl = 'http://localhost:8080/property';
+  apiUrl = 'http://localhost:8080/properties';
   properties: Page<Property> = {
     content: [],
     totalPages: 0,

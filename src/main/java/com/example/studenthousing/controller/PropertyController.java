@@ -29,7 +29,7 @@ public class PropertyController {
     public PropertyController(PropertyService propertyService) {
         this.propertyService = propertyService;
     }
-    @GetMapping(value = "/property", produces = { MediaType.APPLICATION_JSON_VALUE, "text/csv" })
+    @GetMapping(value = "/properties", produces = { MediaType.APPLICATION_JSON_VALUE, "text/csv" })
     public ResponseEntity<?> getPropertyList(
             @RequestParam(required = false) String city,
             @RequestParam(defaultValue = "json") String format,
@@ -116,7 +116,7 @@ public class PropertyController {
     }
 
 
-    @GetMapping("/property/distinct-cities")
+    @GetMapping("/properties/distinct-cities")
     public ResponseEntity<List<String>> getDistinctCities() {
         List<String> cities = propertyService.getDistinctCities();
         return ResponseEntity.ok(cities);
@@ -124,7 +124,7 @@ public class PropertyController {
 
 
 
-    @GetMapping("/property/{id}")
+    @GetMapping("/properties/{id}")
     public ResponseEntity<?> getPropertiesById(@PathVariable("id") int id) {
         Page<Property> propertyOptional = propertyService.getPropertiesById(id);
         if (propertyOptional.isEmpty()) {
@@ -177,16 +177,16 @@ public class PropertyController {
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
     // Check the request for correct input
-    @PostMapping("/property")
+    @PostMapping("/properties")
     public ResponseEntity<?> register (@RequestBody Property property){
         if (property == null) {
             return new ResponseEntity<>(Map.of("error", "You have not given the correct input"),
                     HttpStatus.BAD_REQUEST);
         }
-        if (property.getExternalId() == null) {
-            return new ResponseEntity<>(Map.of("error", "You have not given the correct input"),
-                    HttpStatus.BAD_REQUEST);
-        }
+//        if (property.getExternalId() == null) {
+//            return new ResponseEntity<>(Map.of("error", "You have not given the correct input"),
+//                    HttpStatus.BAD_REQUEST);
+//        }
         Property newProperty = propertyService.newProperty(
                 property.getId(),property.getExternalId(), property.getAreaSqm(), property.getCity(),
                 property.getCoverImageUrl(), property.getFurnish(), property.getLatitude(),
@@ -202,6 +202,10 @@ public class PropertyController {
                 property.getRoommates(), property.getShower(), property.getSmokingInside(),
                 property.getToilet()
         );
+
+        propertyRepository.save(newProperty);
+        System.out.println("New Property added! ID: " + newProperty.getId() + " in " + newProperty.getCity());
+
         // Create a HashMap to store the property details
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("id", property.getId());
@@ -243,7 +247,12 @@ public class PropertyController {
         responseMap.put("toilet", newProperty.getToilet());
         responseMap.put("status", "Property created!");
 
-        return new ResponseEntity<>(responseMap, HttpStatus.OK);
+        // return new ResponseEntity<>(responseMap, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of(
+                "Success", "New property added",
+                "ID:", newProperty.getId(),
+                "City:", newProperty.getCity()
+        ), HttpStatus.OK);
     }
 }
 

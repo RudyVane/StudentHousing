@@ -42,34 +42,38 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean ("securityFilterChain")
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        var chain = http.cors().and()
-                .csrf().disable()
-                .authorizeHttpRequests(customizer -> customizer
-                        .antMatchers("/csrf").permitAll()
-                        .antMatchers("/login").permitAll()
-                        .antMatchers("/register").permitAll()
-                        .antMatchers("/property").permitAll()
-                        .antMatchers("/account").permitAll()
-                        .antMatchers("/advertisements").permitAll()
-                        .antMatchers("/advertisements/**").permitAll()
-                        .anyRequest().denyAll())
-                .exceptionHandling(customizer -> customizer
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .rememberMe(customizer -> customizer.alwaysRemember(true).key("demo"))
-                .build();
-
-        var rememberMeServices = http.getSharedObject(RememberMeServices.class);
-        beanFactory.registerSingleton("rememberMeServices", rememberMeServices);
-
-        return chain;
+        return http.csrf().disable()
+                .authorizeRequests()
+                .anyRequest().permitAll()
+                .and().build();
+//        var chain = http.cors().and()
+//                .csrf().disable()
+//                .authorizeHttpRequests(customizer -> customizer
+//                        .antMatchers("/csrf").permitAll()
+//                        .antMatchers("/login").permitAll()
+//                        .antMatchers("/register").permitAll()
+//                        .antMatchers("/property").permitAll()
+//                        .antMatchers("/account").permitAll()
+//                        .antMatchers("/advertisements").permitAll()
+//                        .antMatchers("/advertisements/**").permitAll()
+//                        .anyRequest().denyAll())
+//                .exceptionHandling(customizer -> customizer
+//                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+//                .rememberMe(customizer -> customizer.alwaysRemember(true).key("demo"))
+//                .build();
+//
+//        var rememberMeServices = http.getSharedObject(RememberMeServices.class);
+//        beanFactory.registerSingleton("rememberMeServices", rememberMeServices);
+//
+//        return chain;
     }
-
-    @RestController
-    @RequiredArgsConstructor
-    @DependsOn("securityFilterChain")
-    public class LoginController {
-        private final RememberMeServices rememberMeServices;
-    }
+//
+//    @RestController
+//    @RequiredArgsConstructor
+//    @DependsOn("securityFilterChain")
+//    public class LoginController {
+//        private final RememberMeServices rememberMeServices;
+//    }
 
     @Bean
     public PasswordEncoder encoder() {

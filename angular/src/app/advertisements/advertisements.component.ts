@@ -8,7 +8,7 @@ import {AlertService} from "../services/alert.service";
   templateUrl: './advertisements.component.html',
   styleUrls: ['./advertisements.component.css']
 })
-export class AdvertisementsComponent {
+export class AdvertisementsComponent implements OnInit {
   users: User[] = [];
   isLoading: boolean = true;
 
@@ -19,7 +19,7 @@ export class AdvertisementsComponent {
   }
 
   ngOnInit(): void {
-    this.getAllAdvertisements();
+    this.getAdvertisements();
   }
 
   private setAdvertisements(response: User[]): void {
@@ -28,7 +28,7 @@ export class AdvertisementsComponent {
   }
 
 
-  getAllAdvertisements(): void {
+  getAdvertisements(): void {
     this.http.get<User[]>('/api/advertisements').subscribe(
       (response: User[]) => {
         this.setAdvertisements(response);
@@ -40,5 +40,4 @@ export class AdvertisementsComponent {
       }
     );
   }
-
 }

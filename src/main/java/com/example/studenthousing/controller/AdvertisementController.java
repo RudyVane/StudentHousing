@@ -3,7 +3,6 @@ package com.example.studenthousing.controller;
 import com.example.studenthousing.model.User;
 import com.example.studenthousing.repository.UserRepository;
 import com.example.studenthousing.services.UserService;
-import com.example.studenthousing.validation.error.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,22 +32,30 @@ public class AdvertisementController {
         else {
             System.out.println("List of advertisements returned");
             return new ResponseEntity<>(users,
-                    HttpStatus.UNPROCESSABLE_ENTITY);
+                    HttpStatus.OK);
         }
     }
 
     @PostMapping("/advertisements")
-    public ResponseEntity<?> putAd(@RequestBody User user) {
+    public ResponseEntity<?> createAd(@RequestBody User user) {
 
         // Check the request for correct input
         if (user == null) {
-            return new ResponseEntity<>(Map.of("error", "You have not given the correct input"),
-                    HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(Map.of("error", "You haven't given a valid advertisement"),
+                    HttpStatus.BAD_REQUEST);
         }
 
+        int userID = user.getId();
+
         // Create new advertisement: update user-info in database, set ad_active to true
-        User u = userRepository.findById(78);
-        System.out.printf("Selected user with username: %s and email: %s\n", u.getUsername(), u.getEmail());
+        User u = userRepository.findById(userID);
+
+        if (u == null) {
+            return new ResponseEntity<>(Map.of("error", "This user does not exist!"),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        System.out.printf("Creating ad for user: %s (%s) and email: %s\n", u.getFullName(), u.getUsername(), u.getEmail());
         u.setFullName(user.getFullName());
         u.setPhotoURL(user.getPhotoURL());
         u.setTelephone(user.getTelephone());
@@ -73,6 +80,7 @@ public class AdvertisementController {
         u.setPrefRoommates(user.getPrefRoommates());
         u.setPrefDistanceToZipcode(user.getPrefDistanceToZipcode());
         u.setPrefZipcode(user.getPrefZipcode());
+        u.setMessage(user.getMessage());
         u.setAdActive(true);
 
         userRepository.save(u);
@@ -82,4 +90,70 @@ public class AdvertisementController {
                 HttpStatus.CREATED);
     }
 
+    @GetMapping("/advertisements/{id}")
+    public ResponseEntity<?> editAd(@PathVariable int id) {
+        User user = userRepository.findById(id);
+
+        // Check for existing user
+        if (user == null) {
+            System.out.println("User with id: " + id + " does not exist!");
+            return new ResponseEntity<>(Map.of("error", "This user does not exist"),
+                    HttpStatus.NOT_FOUND);
+        }
+        // Return the user
+        else {
+            System.out.println("Returned advertisement of user " + user.getUsername());
+            return new ResponseEntity<>(user,
+                    HttpStatus.OK);
+        }
+    }
+
+    @DeleteMapping("/advertisements/{id}")
+    public ResponseEntity<?> deleteAd(@PathVariable int id) {
+        User u = userRepository.findById(id);
+
+        // Check for existing user
+        if (u == null) {
+            System.out.println("User with id: " + id + " does not exist!");
+            return new ResponseEntity<>(Map.of("error", "This user does not exist"),
+                    HttpStatus.NOT_FOUND);
+        } // Return the user
+        else {
+            // Delete all entries in the database
+            u.setFullName(null);
+            u.setPhotoURL(null);
+            u.setTelephone(null);
+            u.setAge(0);
+            u.setGender(null);
+            u.setRole(null);
+            u.setStatus(null);
+            u.setLanguage(null);
+            u.setMaxRent(0);
+            u.setPrefCity(null);
+            u.setPrefGender(null);
+            u.setPrefKitchen(null);
+            u.setPrefShower(null);
+            u.setPrefToilet(null);
+            u.setPrefLiving(null);
+            u.setPrefInternet(null);
+            u.setPrefEnergyLabel(null);
+            u.setPrefPets(null);
+            u.setPrefSmokingInside(null);
+            u.setPrefRoommates(null);
+            u.setPrefDistanceToZipcode(null);
+            u.setPrefZipcode(null);
+            u.setMessage(null);
+
+            // Set flag of adActive to false and save
+            u.setAdActive(false);
+            userRepository.save(u);
+
+            // Show and return success message
+            System.out.println("Advertisement deleted of user with id: " + id);
+            return new ResponseEntity<>(Map.of(
+                    "id", id,
+                    "status", "This ad has been deleted with all it's data"),
+                    HttpStatus.OK);
+        }
+    }
 }

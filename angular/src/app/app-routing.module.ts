@@ -8,6 +8,7 @@ import { HomeComponent } from "./home/home.component";
 import { LoginComponent } from "./login/login.component";
 import { AccountComponent } from "./account/account.component";
 import { AlertComponent } from "./alert/alert.component";
+import {AdvertisementsComponent} from "./advertisements/advertisements.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'account', component: AccountComponent },
   { path: 'property-list', component: PropertyListComponent },
+  { path: 'advertisements', component: AdvertisementsComponent },
   { path: 'user-advertisement', component: UserAdvertisementComponent }
 ];
 

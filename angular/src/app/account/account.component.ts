@@ -79,6 +79,10 @@ export class AccountComponent implements OnInit {
     this.router.navigate(['/user-advertisement'], { queryParams: { id: id } });
   }
 
+  showCreateNewPropertyForm() {
+    this.router.navigate(['/form']);
+  }
+
   submitForm() {
     if (this.number) {
       this.id = this.number;

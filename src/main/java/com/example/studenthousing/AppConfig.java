@@ -30,12 +30,6 @@ public class AppConfig {
         return transactionManager;
     }
 
-
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Configuration
     public class EmailConfig {
         private final String senderEmail = "codegorilla9@gmail.com"; // Replace with your sender email

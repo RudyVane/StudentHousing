@@ -51,6 +51,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                         .antMatchers("/property").permitAll()
                         .antMatchers("/account").permitAll()
                         .antMatchers("/advertisements").permitAll()
+                        .antMatchers("/advertisements/**").permitAll()
                         .anyRequest().denyAll())
                 .exceptionHandling(customizer -> customizer
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

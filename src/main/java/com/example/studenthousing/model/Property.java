@@ -76,7 +76,7 @@ public class Property {
     private String pageTitle;
     @Column(name="pets")
     private String pets;
-    @Column(name="registration_costs")
+    @Column(name="registration_cost")
     private int registrationCost;
     @Column(name="roommates")
     private String roommates;

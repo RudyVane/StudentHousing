@@ -9,7 +9,7 @@ import { LoginComponent } from "./login/login.component";
 import { AccountComponent } from "./account/account.component";
 import { AlertComponent } from "./alert/alert.component";
 // import { PropertyDetailsComponent } from './property-details/property-details.component';
-
+import {AdvertisementsComponent} from "./advertisements/advertisements.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,9 +20,7 @@ const routes: Routes = [
   { path: 'property-list', component: PropertyListComponent },
   { path: 'user-advertisement', component: UserAdvertisementComponent },
   // { path: 'properties/:id', component: PropertyDetailsComponent },
-
-
-
+  { path: 'advertisements', component: AdvertisementsComponent }
 ];
 
 @NgModule({

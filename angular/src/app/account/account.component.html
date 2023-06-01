@@ -13,18 +13,41 @@
         </div>
       </div>
     </form>
+
+  <div class="mb-3">
+    <label>Selected ID:</label>
+    <input class="mx-3" disabled type="text" value="{{ id }}">
+  </div>
+
 <!-- Table that shows your selected account details -->
   <h1>Your account</h1>
-  <table class="table">
-    <tr>
-      <td>Username</td>
-      <td>Email</td>
-      <td>ID</td>
-    </tr>
-    <tr>
-      <td>{{ user.username }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.id }}</td>
-    </tr>
+  <table class="table w-50">
+    <thead>
+      <tr>
+        <td>Username</td>
+        <td>Email</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="col mb-3" *ngIf="!hasAd; else elseBlock">
+            <button class="btn btn-success" (click)="showCreateNewAdForm(id)">Place advertisement</button>
+          </div>
+          <ng-template #elseBlock>
+            <div class="col mb-3">
+              <button class="btn btn-secondary" (click)="editAd(id)">Edit advertisement</button>
+            </div>
+            <div class="col mb-3">
+              <button class="btn btn-warning" (click)="deleteAd(id)">Delete advertisement</button>
+            </div>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>

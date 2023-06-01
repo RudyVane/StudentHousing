@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AlertService } from "../services/alert.service";
+import {User} from "../models/user";
 
 @Component({
   selector: 'app-register',
@@ -11,7 +13,10 @@ export class RegisterComponent implements OnInit {
   form!: FormGroup;
   formFields!: any[]; // Define the form fields array
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private http: HttpClient) {}
 
 
   ngOnInit() {
@@ -32,10 +37,12 @@ export class RegisterComponent implements OnInit {
 
   submitForm() {
     if (this.form.valid) {
-      this.http.post('/api/register', this.form.value).subscribe(
+      this.http.post<User>('/api/register', this.form.value).subscribe(
         (response) => {
           console.log('Form submission successful:', response);
           // Handle any success logic here
+          let msg = response.username + ` you have successfully registered with id ` + response.id;
+          this.alertService.success(msg);
         },
         (error) => {
           console.error('Form submission error:', error.error);

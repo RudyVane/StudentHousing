@@ -5,9 +5,23 @@
   <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-container">
     <div class="form-row" *ngFor="let field of formFields">
       <label>{{ field.label }}</label>
-      <input type="text" [id]="field.id" [formControlName]="field.name" [required]="field.required">
+      <ng-container [ngSwitch]="field.type">
+
+        <textarea *ngSwitchCase="'textarea'"
+          [id]="field.id"
+          [formControlName]="field.name"
+          [required]="field.required"
+          [placeholder]="field.placeholder"></textarea>
+
+        <input *ngSwitchDefault
+           type="text"
+           [id]="field.id"
+           [formControlName]="field.name"
+           [required]="field.required">
+
+      </ng-container>
     </div>
-    <button type="submit">Register</button>
+    <button type="submit">Place ad</button>
   </form>
 </div>
 </div>
